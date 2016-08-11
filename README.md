@@ -2,11 +2,16 @@
 
 # Requirements
 * npm
-* bower
+* gulp
 
 # Installation
 ```bash
   git clone https://github.com/H-Plus-Time/augmented-melbourne.git
   cd augmented-melbourne
-  bower install
+  gulp
+```
+
+# Development
+```bash
+  gulp dev
 ```
