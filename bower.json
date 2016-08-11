@@ -24,6 +24,7 @@
     "paper-tabs": "^1.6.2",
     "paper-toast": "^1.3.0",
     "jsartoolkit5": "*",
-    "three.js": "threejs#*"
+    "three.js": "threejs#*",
+    "fetch": "^1.0.0"
   }
 }
