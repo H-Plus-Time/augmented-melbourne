@@ -27,6 +27,7 @@ On Linux:
 ```
 
 On Windows:
+Once you're in the repository
 ```bash
-    npm-exec gulp dev
+    .\node_modules\.bin\gulp dev
 ```
