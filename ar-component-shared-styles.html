@@ -1,0 +1,35 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<dom-module id="ar-component-shared-styles">
+  <template>
+    <style>
+		:host {
+		--app-primary-color: #202020;
+		--app-secondary-color: #757575;
+		--app-accent-color: #172C50;
+		};
+		--paper-tabs {
+			color: var(--app-secondary-color);
+		}
+		--paper-tab {
+			color: red;
+		}
+		.drawer-list {
+		margin: 0 20px;
+		}
+
+		.drawer-list a {
+		display: block;
+		padding: 0 16px;
+		line-height: 40px;
+		text-decoration: none;
+		font-size: 1.6em;
+		color: var(--app-secondary-color);
+		}
+
+		.drawer-list a.iron-selected {
+		color: black;
+		font-weight: bold;
+		}
+    </style>
+  </template>
+</dom-module>

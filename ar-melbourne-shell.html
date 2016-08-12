@@ -9,36 +9,44 @@
 <link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="ar-component.html">
+<link rel="import" href="ar-component-shared-styles.html">
 <!-- <link rel="import" href="bower_components/platinum-bluetooth/platinum-bluetooth-elements.html"> -->
 <dom-module id="ar-melbourne">
     <template>
+        <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment"></style>
         <paper-toast id="toast_notification">
         </paper-toast>
+        <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
         <app-drawer-layout fullbleed force-narrow>
             <app-drawer>
-                <paper-tabs>
+                <iron-selector role="navigation" class="drawer-list">
                     <template is="dom-repeat" items="{{menuItems}}">
-                        <paper-tab>{{item.text}}</paper-tab>
+                        <a href="{{item.href}}">{{item.text}}</a>
                     </template>
-                </paper-tabs>
+                </iron-selector>
             </app-drawer>
             <app-header-layout>
                 <app-header>
                     <app-toolbar>
                         <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
                         <div main-title>Augmented Melbourne</div>
+                        <template is="dom-if" if="[[!smallScreen]]">
                         <paper-tabs>
                             <template is="dom-repeat" items="{{menuItems}}">
                                 <paper-tab>{{item.text}}</paper-tab>
                             </template>
                         </paper-tabs>
+                        </template>
                         <paper-icon-button icon="search"></paper-icon-button>
                     </app-toolbar>
                 </app-header>
-                <ar-component>
-                </ar-component>
+                <!-- <ar-component> -->
+                <!-- </ar-component> -->
             </app-header-layout>
         </app-drawer-layout>
 
@@ -46,8 +54,20 @@
     <script>
         Polymer({
             is: 'ar-melbourne',
+            properties: {
+                smallScreen: {
+                    type: Boolean,
+                    notify: true,
+                    value: function() { return false; }
+                }
+            },
             attached: function() {
-
+                this.menuItems = [{
+                    "text": "Settings"
+                },
+                {
+                    "text": "About"
+                }]
             }
         })
     </script>
