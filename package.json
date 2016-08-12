@@ -19,6 +19,7 @@
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-bower": "*",
-    "bower": "*"
+    "bower": "*",
+    "browser-sync": "*"
   }
 }
