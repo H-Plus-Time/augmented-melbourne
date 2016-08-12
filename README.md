@@ -10,6 +10,7 @@
 * Reboot
 ```bash
   nvm install latest
+  nvm on
 ```
 
 add `path/to/this/repo/nvm-workaround.bat` to your PATH variable (via control panel)
@@ -27,5 +28,5 @@ On Linux:
 
 On Windows:
 ```bash
-	npm-exec gulp dev
+    npm-exec gulp dev
 ```
