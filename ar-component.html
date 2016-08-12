@@ -80,7 +80,7 @@
                 tick();
             },
             attached: function() {
-                ARController.getUserMediaThreeScene({maxARVideoSize: this.$$('video').getBoundedClientRect().height, cameraParam: 'data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess});
+                ARController.getUserMediaThreeScene({maxARVideoSize: this.$$('video').getBoundingClientRect().height, cameraParam: 'data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess});
 
             }
         });
