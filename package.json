@@ -17,9 +17,7 @@
   },
   "homepage": "https://github.com/H-Plus-Time/augmented-melbourne#readme",
   "dependencies": {
-    "gulp": "^3.9.1",
     "gulp-bower": "*",
-    "bower": "*",
     "browser-sync": "*"
   }
 }

@@ -11,7 +11,7 @@
 ```bash
   nvm install latest
   nvm on
-  npm install -g npm-run
+  npm install -g bower gulp
 ```
 
 # Installation
@@ -22,5 +22,10 @@
 
 # Development
 ```bash
-  npm-run gulp dev
+  gulp dev
 ```
+
+For a self-contained installation (or as near as possible), run
+```npm install -g npm-run```, and everything else as a plain local
+```npm install```. Calls to gulp, bower and similar will need be
+prefixed with ```npm-run```.
