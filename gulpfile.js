@@ -9,7 +9,7 @@ var bower = require('gulp-bower');
 var pkg = require('./package.json');
 
 // Default task
-gulp.task('default', ['minify-css', 'minify-js', 'bower']);
+gulp.task('default', ['minify-css', 'minify-js', 'bower', 'node_deps']);
 
 
 // update bower dependencies
@@ -40,7 +40,10 @@ gulp.task('minify-js', function() {
     //     }))
 });
 
-
+gulp.task('node_deps', function() {
+    return gulp.src('node_modules/three/build/*')
+        .pipe(gulp.dest('static'))
+})
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
@@ -52,7 +55,7 @@ gulp.task('browserSync', function() {
 })
 
 // Watch Task that compiles LESS and watches for HTML or JS changes and reloads with browserSync
-gulp.task('dev', ['browserSync', 'minify-css', 'minify-js', 'bower'], function() {
+gulp.task('dev', ['browserSync', 'minify-css', 'minify-js', 'bower', 'node_deps'], function() {
     // gulp.watch('less/*.less', ['less']);
     // gulp.watch('css/*.css', ['minify-css']);
     // gulp.watch('js/*.js', ['minify-js']);
