@@ -4,9 +4,9 @@ if ('registerElement' in document
 	&& 'content' in document.createElement('template')) {
 // We're using a browser with native WC support!
 } else {
-	document.write('<script src="/bower_components/webcomponentsjs/webcomponents.js"><\/script>');
+	document.write('<script src="/bower_components/webcomponentsjs/webcomponents-lite.js"><\/script>');
 }
 
-if(!document.fetch) {
+if(!window.fetch) {
 	document.write('<script src="/bower_components/fetch/fetch.js"></script>')
 }

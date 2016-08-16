@@ -28,6 +28,7 @@ changes to running programs - in this case explorer.exe - or any of its children
 ```bash
   git clone https://github.com/H-Plus-Time/augmented-melbourne.git
   cd augmented-melbourne
+  npm install
 ```
 
 # Development

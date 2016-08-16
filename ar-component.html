@@ -2,7 +2,8 @@
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <script src="bower_components/jsartoolkit5/build/artoolkit.debug.js"></script>
 <script src="bower_components/jsartoolkit5/js/artoolkit.api.js"></script>
-<script src="static/three.min.js"></script>
+<!-- <script src="static/three.min.js"></script> -->
+<script src="bower_components/three.js/build/three.min.js"></script>
 <script src="bower_components/jsartoolkit5/js/artoolkit.three.js"></script>
 <dom-module id="ar-component">
     <template>
@@ -15,8 +16,8 @@
             height: auto   !important;
             }
         </style>
-        <div class="flex">
-            <video controls src="data/test.ogg"></video>
+        <div class="flex" style="background:grey">
+            <video controls></video>
         </div>
     </template>
     <script>
@@ -38,7 +39,8 @@
                         document.body.className += ' desktop';
                     }
                 }
-                document.body.insertBefore(renderer.domElement, document.body.firstChild);
+                document.body.insertBefore(renderer.domElement, this.querySelector('div'));
+                console.log(renderer);
                 var rotationV = 0;
                 var rotationTarget = 0;
                 renderer.domElement.addEventListener('click', function(ev) {
