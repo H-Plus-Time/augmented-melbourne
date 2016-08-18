@@ -1,10 +1,7 @@
 <link rel='import' href="bower_components/polymer/polymer.html">
-<link rel='import' href="bower_components/paper-button/paper-button.html">
-<link rel='import' href="bower_components/iron-icons/iron-icons.html">
-<link rel='import' href="bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="bower_components/app-route/app-route.html">
 <link rel="import" href="bower_components/app-layout/app-layout.html">
 <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="bower_components/app-layout/app-header-layout/app-header-layout.html">
@@ -12,21 +9,37 @@
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
-<link rel="import" href="bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="ar-component.html">
 <link rel="import" href="ar-component-shared-styles.html">
+<link async rel='import' href="bower_components/paper-icon-button/paper-icon-button.html">
+<link async rel="import" href="bower_components/paper-toast/paper-toast.html">
+<link async rel='import' href="bower_components/paper-button/paper-button.html">
+<link async rel='import' href="bower_components/iron-icons/iron-icons.html">
+<link async rel="import" href="bower_components/iron-selector/iron-selector.html">
+<link async rel="import" href="ar-component.html">
 <!-- <link rel="import" href="bower_components/platinum-bluetooth/platinum-bluetooth-elements.html"> -->
 <dom-module id="ar-melbourne">
     <template>
-        <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment"></style>
+        <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment">
+
+        </style>
         <paper-toast id="toast_notification">
         </paper-toast>
+
         <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
+        <app-location route="{{route}}"></app-location>
+        <app-route
+            route="{{route}}"
+            pattern="/:page"
+            data="{{routeData}}"
+            tail="{{subroute}}"></app-route>
         <app-drawer-layout fullbleed force-narrow>
             <app-drawer>
                 <iron-selector role="navigation" class="drawer-list">
-                    <template is="dom-repeat" items="{{menuItems}}">
-                        <a href="{{item.href}}">{{item.text}}</a>
+                    <template is="dom-repeat"
+                    items="{{menuItems}}"
+                    select-attribute="name"
+                    selected="{{routeData.page}}">
+                        <a name="{{item.name}}" href="{{item.href}}">{{item.text}}</a>
                     </template>
                 </iron-selector>
             </app-drawer>
@@ -45,8 +58,17 @@
                         <paper-icon-button icon="search"></paper-icon-button>
                     </app-toolbar>
                 </app-header>
-                <ar-component>
-                </ar-component>
+                <!-- Content -->
+                <iron-pages selected="{{routeData.page}}">
+                  <ar-component name="main">
+
+                  </ar-component>
+                  <div name="settings">
+                    
+                  </div>
+                </iron-pages>
+
+                <!-- end content -->
             </app-header-layout>
         </app-drawer-layout>
 
@@ -63,10 +85,12 @@
             },
             attached: function() {
                 this.menuItems = [{
-                    "text": "Settings"
+                    "text": "Settings",
+                    "href": "settings"
                 },
                 {
-                    "text": "About"
+                    "text": "About",
+                    "href": "about"
                 }]
             }
         })

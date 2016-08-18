@@ -3,13 +3,25 @@
 <script src="bower_components/jsartoolkit5/build/artoolkit.debug.js"></script>
 <script src="bower_components/jsartoolkit5/js/artoolkit.api.js"></script>
 <script src="static/three.min.js"></script>
-<!-- <script src="bower_components/three.js/build/three.min.js"></script> -->
 <script src="bower_components/jsartoolkit5/js/artoolkit.three.js"></script>
+<link async rel="import" href="bower_components/paper-material/paper-material.html">
+<link async rel="import" href="bower_components/google-map/google-map.html" />
 <dom-module id="ar-component">
     <template>
         <style include="iron-flex iron-flex-alignment">
             :host {
                 display: block;
+                position:relative;
+            }
+            .overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 13.5vw;
+            width: 24vw;
+            margin:10px;
+            z-index: 10;
+            background-color: black;
             }
             video {
             width: 100%    !important;
@@ -18,6 +30,11 @@
         </style>
         <div class="flex" style="background:grey">
             <video controls></video>
+            <paper-material elevation="3">
+                <google-map class="overlay">
+
+                </google-map>
+            </paper-material>
         </div>
     </template>
     <script>

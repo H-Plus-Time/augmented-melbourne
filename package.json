@@ -17,9 +17,14 @@
   },
   "homepage": "https://github.com/H-Plus-Time/augmented-melbourne#readme",
   "dependencies": {
-    "gulp": "^3.9.1",
-    "gulp-bower": "*",
     "browser-sync": "*",
     "three": "*"
+  },
+  "scripts": {
+    "clean": "rm -r bower_components && rm -r node_modules",
+    "bower": "bower install",
+    "browser-sync": "browser-sync start --server --files '*.html' --reload-delay=300 --reload-debounce=500",
+    "deploy": "bower",
+    "dev": "npm run bower && npm run browser-sync"
   }
 }
