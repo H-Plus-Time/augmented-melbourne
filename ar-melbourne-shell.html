@@ -10,6 +10,7 @@
 <link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="ar-component-shared-styles.html">
+<link rel="import" href="passive-search.html">
 <link async rel='import' href="bower_components/paper-icon-button/paper-icon-button.html">
 <link async rel="import" href="bower_components/paper-toast/paper-toast.html">
 <link async rel='import' href="bower_components/paper-button/paper-button.html">
@@ -59,12 +60,13 @@
                     </app-toolbar>
                 </app-header>
                 <!-- Content -->
+                <<passive-search></passive-search>
                 <iron-pages selected="{{routeData.page}}">
                   <ar-component name="main">
 
                   </ar-component>
                   <div name="settings">
-                    
+
                   </div>
                 </iron-pages>
 

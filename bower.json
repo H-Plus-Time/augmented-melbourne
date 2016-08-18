@@ -24,6 +24,8 @@
     "paper-toast": "^1.3.0",
     "jsartoolkit5": "*",
     "fetch": "^1.0.0",
-    "google-map": "GoogleWebComponents/google-map#^1.1.11"
+    "google-map": "GoogleWebComponents/google-map#^1.1.11",
+    "paper-spinner": "^1.2.0",
+    "app-route": "*"
   }
 }
