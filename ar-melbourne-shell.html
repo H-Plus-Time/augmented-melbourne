@@ -37,9 +37,7 @@
             <app-drawer>
                 <iron-selector role="navigation" class="drawer-list">
                     <template is="dom-repeat"
-                    items="{{menuItems}}"
-                    select-attribute="name"
-                    selected="{{routeData.page}}">
+                    items="{{menuItems}}">
                         <a name="{{item.name}}" href="{{item.href}}">{{item.text}}</a>
                     </template>
                 </iron-selector>
@@ -60,15 +58,10 @@
                     </app-toolbar>
                 </app-header>
                 <!-- Content -->
-                <<passive-search></passive-search>
-                <iron-pages selected="{{routeData.page}}">
-                  <ar-component name="main">
+
+                  <ar-component>
 
                   </ar-component>
-                  <div name="settings">
-
-                  </div>
-                </iron-pages>
 
                 <!-- end content -->
             </app-header-layout>

@@ -2,7 +2,7 @@
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <script src="bower_components/jsartoolkit5/build/artoolkit.debug.js"></script>
 <script src="bower_components/jsartoolkit5/js/artoolkit.api.js"></script>
-<script src="static/three.min.js"></script>
+<script src="js/three.min.js"></script>
 <script src="bower_components/jsartoolkit5/js/artoolkit.three.js"></script>
 <link async rel="import" href="bower_components/paper-material/paper-material.html">
 <link async rel="import" href="bower_components/google-map/google-map.html" />
@@ -31,6 +31,7 @@
         <div class="flex" style="background:grey">
             <video controls></video>
             <paper-material elevation="3">
+              <!-- <passive-search></passive-search> -->
                 <google-map class="overlay">
 
                 </google-map>
@@ -56,6 +57,7 @@
                         document.body.className += ' desktop';
                     }
                 }
+                console.log(this);
                 document.body.insertBefore(renderer.domElement, this.querySelector('div'));
                 console.log(renderer);
                 var rotationV = 0;
@@ -99,7 +101,7 @@
                 tick();
             },
             attached: function() {
-                ARController.getUserMediaThreeScene({maxARVideoSize: this.$$('video').getBoundingClientRect().height, cameraParam: 'data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess});
+                ARController.getUserMediaThreeScene({maxARVideoSize: this.$$('video').getBoundingClientRect().height, cameraParam: 'data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)});
 
             }
         });
