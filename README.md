@@ -12,7 +12,7 @@
 ```bash
   nvm install latest
   nvm on
-  npm install -g bower gulp
+  npm install -g bower
 ```
 * Reboot again (global npm packages change the system PATH variable, which does not propagate
 changes to running programs - in this case explorer.exe - or any of its children).
@@ -22,7 +22,7 @@ changes to running programs - in this case explorer.exe - or any of its children
 * install nvm - ```curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash```
 * ensure nvm is in your path - ```source ~/.bashrc``` (or the equivalent for your shell, e.g. .zshrc)
 * install node and npm - ```nvm install node```
-* install bower and gulp globally (or locally as described in "Self-contained install")
+* ```npm install -g bower```
 
 # Installation
 ```bash
@@ -33,7 +33,7 @@ changes to running programs - in this case explorer.exe - or any of its children
 
 # Development
 ```bash
-  gulp dev
+  npm run dev
 ```
 
 # Self-contained install
