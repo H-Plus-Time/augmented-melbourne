@@ -1,0 +1,5 @@
+name: augmented-melbourne
+dependencies:
+  - python=3.5
+  - pip:
+    - qrcode

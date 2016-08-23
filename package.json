@@ -4,7 +4,12 @@
   "description": "# Requirements * npm * gulp",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "copy": "node build.js",
+    "clean": "rm -r bower_components && rm -r node_modules",
+    "bower": "bower install",
+    "browser-sync": "browser-sync start --server --files '*.html' --reload-delay=300 --reload-debounce=500",
+    "deploy": "bower install",
+    "dev": "npm run npm run bower && npm run browser-sync"
   },
   "repository": {
     "type": "git",
@@ -18,13 +23,7 @@
   "homepage": "https://github.com/H-Plus-Time/augmented-melbourne#readme",
   "dependencies": {
     "browser-sync": "*",
+    "copy": "^0.3.0",
     "three": "*"
-  },
-  "scripts": {
-    "clean": "rm -r bower_components && rm -r node_modules",
-    "bower": "bower install",
-    "browser-sync": "browser-sync start --server --files '*.html' --reload-delay=300 --reload-debounce=500",
-    "deploy": "bower",
-    "dev": "npm run bower && npm run browser-sync"
   }
 }
