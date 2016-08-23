@@ -1,7 +1,13 @@
 <link rel='import' href="bower_components/polymer/polymer.html">
-<link rel="import" href="bower_components/app-route/app-route.html">
+<link rel='import' href="bower_components/paper-button/paper-button.html">
+<link rel='import' href="bower_components/iron-icons/iron-icons.html">
+<link rel='import' href="bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="bower_components/app-layout/app-layout.html">
+<link rel="import" href="bower_components/app-route/app-route.html">
+<link rel="import" href="bower_components/app-route/app-location.html">
+<link rel="import" href="bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="bower_components/app-layout/app-header-layout/app-header-layout.html">
@@ -9,36 +15,28 @@
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="ar-component.html">
 <link rel="import" href="ar-component-shared-styles.html">
-<link rel="import" href="passive-search.html">
-<link async rel='import' href="bower_components/paper-icon-button/paper-icon-button.html">
-<link async rel="import" href="bower_components/paper-toast/paper-toast.html">
-<link async rel='import' href="bower_components/paper-button/paper-button.html">
-<link async rel='import' href="bower_components/iron-icons/iron-icons.html">
-<link async rel="import" href="bower_components/iron-selector/iron-selector.html">
-<link async rel="import" href="ar-component.html">
-<!-- <link rel="import" href="bower_components/platinum-bluetooth/platinum-bluetooth-elements.html"> -->
 <dom-module id="ar-melbourne">
     <template>
-        <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment">
-
-        </style>
+        <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment"></style>
         <paper-toast id="toast_notification">
         </paper-toast>
+        <app-location route="{{route}}" use-hash-as-path></app-location>
 
-        <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
-        <app-location route="{{route}}"></app-location>
+        <!-- this app-route manages the top-level routes -->
         <app-route
             route="{{route}}"
-            pattern="/:page"
+            pattern="/:view"
             data="{{routeData}}"
             tail="{{subroute}}"></app-route>
+        <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
         <app-drawer-layout fullbleed force-narrow>
             <app-drawer>
-                <iron-selector role="navigation" class="drawer-list">
-                    <template is="dom-repeat"
-                    items="{{menuItems}}">
-                        <a name="{{item.name}}" href="{{item.href}}">{{item.text}}</a>
+                <iron-selector role="navigation" class="drawer-list" selected="about">
+                    <template is="dom-repeat" items="{{menuItems}}">
+                        <a href="#/{{item.href}}">{{item.text}}</a>
                     </template>
                 </iron-selector>
             </app-drawer>
@@ -50,20 +48,22 @@
                         <template is="dom-if" if="[[!smallScreen]]">
                         <paper-tabs>
                             <template is="dom-repeat" items="{{menuItems}}">
-                                <paper-tab>{{item.text}}</paper-tab>
+                                <paper-tab link>
+                                  <a href="#/{{item.href}}">{{item.text}}</a>
+                                </paper-tab>
                             </template>
                         </paper-tabs>
                         </template>
                         <paper-icon-button icon="search"></paper-icon-button>
                     </app-toolbar>
                 </app-header>
-                <!-- Content -->
+                <div style="height:calc(100vh - 64px);width:100%">
+                  <iron-pages selected="{{routeData.view}}" attr-for-selected="name" style="height:100%">
+                    <ar-component name="active">
+                    </ar-component>
+                  </iron-pages>
+                </div>
 
-                  <ar-component>
-
-                  </ar-component>
-
-                <!-- end content -->
             </app-header-layout>
         </app-drawer-layout>
 
@@ -78,15 +78,21 @@
                     value: function() { return false; }
                 }
             },
+
+
+
             attached: function() {
                 this.menuItems = [{
-                    "text": "Settings",
-                    "href": "settings"
+                    "text": "Settings"
                 },
                 {
-                    "text": "About",
-                    "href": "about"
+                  "text": "Active",
+                  "href": "active"
+                },
+                {
+                    "text": "About"
                 }]
+                this.route = "#/active";
             }
         })
     </script>

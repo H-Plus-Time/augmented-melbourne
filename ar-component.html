@@ -11,7 +11,8 @@
         <style include="iron-flex iron-flex-alignment">
             :host {
                 display: block;
-                position:relative;
+                /*position:relative;*/
+
             }
             .overlay {
             position: absolute;
@@ -21,20 +22,19 @@
             width: 24vw;
             margin:10px;
             z-index: 10;
-            background-color: black;
+            background-color: white;
             }
             video {
-            width: 100%    !important;
-            height: auto   !important;
+              width: 100%    ;
+              height: 100%   ;
             }
         </style>
         <div class="flex" style="background:grey">
             <video controls></video>
-            <paper-material elevation="3">
-              <!-- <passive-search></passive-search> -->
-                <google-map class="overlay">
+            <paper-material elevation="3" class="overlay">
+                  <google-map draggable=false disable-default-ui disable-zoom>
 
-                </google-map>
+                  </google-map>
             </paper-material>
         </div>
     </template>
