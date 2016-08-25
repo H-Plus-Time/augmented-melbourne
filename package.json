@@ -9,7 +9,7 @@
     "bower": "bower install",
     "browser-sync": "browser-sync start --server --files '*.html' --reload-delay=300 --reload-debounce=500",
     "deploy": "bower install",
-    "dev": "npm run npm run bower && npm run browser-sync"
+    "dev": "npm run copy && npm run bower && npm run browser-sync"
   },
   "repository": {
     "type": "git",
