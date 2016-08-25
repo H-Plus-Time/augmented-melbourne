@@ -1,5 +1,6 @@
 
-<link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="bower_components/paper-spinner/paper-spinner-lite.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <!-- Definition -->
 <dom-module id="passive-search">
   <template>
@@ -7,8 +8,33 @@
       :host {
         display: block;
       }
-    </style>
-<paper-spinner></paper-spinner>
+      .spinnerDiv {
+  @apply(--layout-center);
+
+  @apply(--layout-horizontal);
+
+}
+      paper-spinner-lite {
+   --paper-spinner-stroke-width: 50px;
+   width: 250px;
+   height: 250px;
+     --paper-spinner-color: black;
+
+ }
+ p{
+font-weight: bold;
+ font-size: 100px;
+
+ }
+  </style>
+    <div class="spinnerDiv">
+
+
+<paper-spinner-lite active></paper-spinner-lite>
+<p>
+  Loading
+</p>
+  </div>
   </template>
   <script>
     Polymer({
