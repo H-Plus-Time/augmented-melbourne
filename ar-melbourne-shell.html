@@ -18,6 +18,8 @@
 <link rel="import" href="bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="ar-component.html">
 <link rel="import" href="ar-component-shared-styles.html">
+<link rel="import" href="augmentedMelbourneLandingPage.html">
+
 <dom-module id="ar-melbourne">
     <template>
         <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment"></style>
@@ -54,13 +56,18 @@
                             </template>
                         </paper-tabs>
                         </template>
-                        <paper-icon-button icon="search"></paper-icon-button>
+                  <paper-icon-button icon="search"></paper-icon-button>
                     </app-toolbar>
                 </app-header>
                 <div style="width:100%">
                   <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
                     <ar-component name="active">
                     </ar-component>
+                  </iron-pages>
+                </div>
+                <div style="width:100%">
+                  <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
+                  <augmented-melbourneLandingPage name="home"></augmented-melbourneLandingPage>
                   </iron-pages>
                 </div>
 

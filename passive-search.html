@@ -9,31 +9,34 @@
         display: block;
       }
       .spinnerDiv {
-  @apply(--layout-center);
+ @apply(--layout-vertical);
+ @apply(--layout-center);
+ margin: 10% 10% 10% 10%;
+ padding: 5% 5% 5% 5%;
+ }
 
-  @apply(--layout-horizontal);
 
-}
       paper-spinner-lite {
    --paper-spinner-stroke-width: 50px;
    width: 250px;
    height: 250px;
      --paper-spinner-color: black;
 
+
+
+
  }
  p{
 font-weight: bold;
  font-size: 100px;
+ font-family: Arial;
+
 
  }
   </style>
     <div class="spinnerDiv">
-
-
-<paper-spinner-lite active></paper-spinner-lite>
-<p>
-  Loading
-</p>
+      <paper-spinner-lite active></paper-spinner-lite>
+      <p>LOADING</p>
   </div>
   </template>
   <script>
