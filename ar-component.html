@@ -6,6 +6,25 @@
 <script src="bower_components/jsartoolkit5/js/artoolkit.three.js"></script>
 <link async rel="import" href="bower_components/paper-material/paper-material.html">
 <link async rel="import" href="bower_components/google-map/google-map.html" />
+<script src="bower_components/threex.windowresize/threex.windowresize.js"></script>
+<script src="bower_components/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/grid.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/version.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/detector.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/formatinf.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/errorlevel.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/bitmat.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/datablock.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/bmparser.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/datamask.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/rsdecoder.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/gf256poly.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/gf256.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/decoder.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/qrcode.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/findpat.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/alignpat.js"></script>
+<script type="text/javascript" src="bower_components/jsqrcode/src/databr.js"></script>
 <dom-module id="ar-component">
     <template>
         <style include="iron-flex iron-flex-alignment">
@@ -26,91 +45,190 @@
             z-index: 10;
             background-color: skyblue;
             }
-            video {
-              display:block;
+
+            .img-overlay {
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              min-height:180px;
+              min-width:320px;
+              height: 13.5vw;
+              width: 24vw;
+              margin:10px;
+              z-index: 10;
+              background-color: skyblue;
+            }
+            .display {
+              display:flex;
               position:relative;
               width: 100%;
               height:100%;
+              align-content:space-around;
+              justify-content:center;
+              background:black;
+              overflow:hidden;
             }
         </style>
         <div class="flex" style="background:grey">
-            <video controls></video>
+            <div class="display">
+
+            </div>
             <paper-material elevation="3" class="overlay">
-                  <google-map draggable=false disable-default-ui disable-zoom>
+                  <google-map draggable=false fit-to-markers disable-default-ui disable-zoom>
                     <google-map-marker latitude="[[location.latitude]]"
                     longitude="[[location.longitude]]">
                       <iron-icon icon="maps:my-location"></iron-icon>
                     </google-map-marker>
                   </google-map>
             </paper-material>
+            <img class="img-overlay"/>
         </div>
     </template>
     <script>
-        Polymer({
-            is: 'ar-component',
-            onSuccess: function(arScene, arController, arCamera) {
-                document.body.className = arController.orientation;
-                var renderer = new THREE.WebGLRenderer({antialias: true});
-                if (arController.orientation === 'portrait') {
-                    var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
-                    var h = window.innerWidth;
-                    renderer.setSize(w, h);
-                    renderer.domElement.style.paddingBottom = (w-h) + 'px';
-                } else {
-                    if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
-                        renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight);
-                    } else {
-                        renderer.setSize(arController.videoWidth, arController.videoHeight);
-                        document.body.className += ' desktop';
-                    }
-                }
-                console.log(this);
-                document.body.insertBefore(renderer.domElement, this.querySelector('div'));
-                console.log(renderer);
-                var rotationV = 0;
-                var rotationTarget = 0;
-                renderer.domElement.addEventListener('click', function(ev) {
-                    ev.preventDefault();
-                    rotationTarget += 1;
-                }, false);
-                var sphere = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.5, 8, 8),
-                    new THREE.MeshNormalMaterial()
-                );
-                sphere.material.shading = THREE.FlatShading;
-                sphere.position.z = 0.5;
-                var torus = new THREE.Mesh(
-                    new THREE.TorusGeometry(0.3, 0.2, 8, 8),
-                    new THREE.MeshNormalMaterial()
-                );
-                torus.material.shading = THREE.FlatShading;
-                torus.position.z = 0.5;
-                torus.rotation.x = Math.PI/2;
-                arController.loadMarker('data/patt.hiro', function(markerId) {
-                    var markerRoot = arController.createThreeMarker(markerId);
-                    markerRoot.add(sphere);
-                    arScene.scene.add(markerRoot);
-                });
-                arController.loadMarker('data/patt.kanji', function(markerId) {
-                    var markerRoot = arController.createThreeMarker(markerId);
-                    markerRoot.add(torus);
-                    arScene.scene.add(markerRoot);
-                });
-                var tick = function() {
-                    arScene.process();
-                    rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
-                    sphere.rotation.z += rotationV;
-                    torus.rotation.y += rotationV;
-                    rotationV *= 0.8;
-                    arScene.renderOn(renderer);
-                    requestAnimationFrame(tick);
-                };
-                tick();
-            },
-            attached: function() {
-                ARController.getUserMediaThreeScene({maxARVideoSize: this.$$('video').getBoundingClientRect().height, cameraParam: 'data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)});
-
+      Polymer({
+          is: 'ar-component',
+          properties: {
+            location: {
+              type: Object,
+              notify: true,
+              value: function() { return {latitude: -37.8065131,longitude: 144.9634551}}
             }
-        });
+          },
+          dumpScene: function(renderer) {
+              function errorHandler(e) {
+                  console.log(e);
+              }
+              function onInitFs(fs) {
+                  var timestamp = new Date().getTime();
+                  console.log(timestamp);
+                  fs.root.getFile(`scene-${timestamp}.jpg`, {create: true}, function(fileEntry) {
+
+                      // Create a FileWriter object for our FileEntry (log.txt).
+                      fileEntry.createWriter(function(fileWriter) {
+
+                          fileWriter.onwriteend = function(e) {
+                              console.log('Write completed.');
+                          };
+
+                          fileWriter.onerror = function(e) {
+                              console.log('Write failed: ' + e.toString());
+                          };
+
+                          // Create a new Blob and write it to log.txt.
+                          data = renderer.domElement.toBlob(function(blob){
+                              var newImg = document.createElement("img"),
+                                      url = URL.createObjectURL(blob);
+                              newImg.onload = function(){
+                                  URL.revokeObjectURL(url);
+                              };
+
+                              newImg.src = url;
+                              this.write(blob);
+                              document.body.appendChild(newImg);
+                          }.bind(this));
+                          console.log(data.length);
+                          console.log(data);
+
+
+
+                      }, errorHandler);
+
+                  }, errorHandler);
+
+              }
+
+              navigator.webkitPersistentStorage.requestQuota(1024 * 1024 * 200, function(grantedBytes) {
+                  console.log(grantedBytes);
+              }, function(e) { console.log(e)})
+              // window.webkitRequestFileSystem(window.PERSISTENT, 1024*1024, onInitFs, errorHandler);
+          },
+          onSuccess: function(arScene, arController, arCamera) {
+              document.body.className = arController.orientation;
+              console.log(this);
+              var renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
+              if (arController.orientation === 'portrait') {
+                  var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
+                  var h = window.innerWidth;
+                  console.log("in portrait")
+                  renderer.setSize(w, h);
+                  renderer.domElement.style.paddingBottom = (w-h) + 'px';
+              } else {
+                  if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
+                      renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight);
+                  } else {
+                      this.arController = arController;
+                      renderer.setSize(arController.videoWidth, arController.videoHeight);
+                      document.body.className += ' desktop';
+                  }
+              }
+              renderer.domElement.style.display = "flex";
+              renderer.domElement.style.margin = "auto";
+              if(window.innerHeight < window.innerWidth * 0.75) {
+                var adjustedHeight = window.innerHeight - 64;
+                renderer.setSize(adjustedHeight * 1.33, adjustedHeight)
+              } else {
+                renderer.setSize(window.innerWidth, window.innerWidth * 0.75)
+              }
+              this.renderer = renderer;
+              this.$$('.display').appendChild(renderer.domElement);
+              var rotationV = 0;
+              var rotationTarget = 0;
+
+              renderer.domElement.addEventListener('click', function(ev) {
+                  ev.preventDefault();
+                  rotationTarget += 1;
+              }, false);
+              var sphere = new THREE.Mesh(
+                      new THREE.SphereGeometry(0.5, 8, 8),
+                      new THREE.MeshNormalMaterial()
+              );
+              sphere.material.shading = THREE.FlatShading;
+              sphere.position.z = 0.5;
+              var torus = new THREE.Mesh(
+                      new THREE.TorusGeometry(0.3, 0.2, 8, 8),
+                      new THREE.MeshNormalMaterial()
+              );
+              torus.material.shading = THREE.FlatShading;
+              torus.position.z = 0.5;
+              torus.rotation.x = Math.PI/2;
+              arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.hiro', function(markerId) {
+                  var markerRoot = arController.createThreeMarker(markerId);
+                  // add visualizations here
+                  arScene.scene.add(markerRoot);
+              });
+              arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.kanji', function(markerId) {
+                  var markerRoot = arController.createThreeMarker(markerId);
+                  arScene.scene.add(markerRoot);
+              });
+              // the business end
+              arController.addEventListener('getMarker', _.debounce(function(e) {
+                console.log('found marker', e);
+                var frame = renderer.domElement.toDataURL();
+                qrcode.decode(frame);
+                this.$$('.img-overlay').src = frame;
+              }.bind(this), 100))
+              // this.dumpScene(renderer);
+              var tick = function() {
+                  arScene.process();
+                  arScene.renderOn(renderer);
+                  // this.dumpScene(renderer);
+                  requestAnimationFrame(tick);
+              }.bind(this);
+              tick();
+          },
+          attached: function() {
+              x = ARController.getUserMediaThreeScene({cameraParam: 'bower_components/jsartoolkit5/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)});
+
+              canvasResize = _.debounce(function(e) {
+                if(window.innerHeight < window.innerWidth * 0.75) {
+                  var adjustedHeight = window.innerHeight - 64;
+                  this.renderer.setSize(adjustedHeight * 1.33, adjustedHeight)
+                } else {
+                  this.renderer.setSize(window.innerWidth, window.innerWidth * 0.75)
+                }
+              }.bind(this), 500);
+              window.addEventListener('resize', canvasResize, false);
+          }
+      });
     </script>
 </dom-module>
