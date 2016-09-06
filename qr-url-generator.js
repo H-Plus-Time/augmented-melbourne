@@ -28,7 +28,7 @@ var main = async(function asyncMain() {
     var short_url = resp.data.url;
     var url_parts = short_url.split("/");
     var url_tail = url_parts[url_parts.length - 1];
-    QRCode.save(`${url_tail}.png`, short_url, {errorCorrectLevel: "medium"} , function(err, data) {
+    QRCode.save(`data/${url_tail}.png`, short_url, {errorCorrectLevel: "medium"} , function(err, data) {
         console.log(data);
     });
   })
