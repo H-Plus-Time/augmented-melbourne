@@ -3,6 +3,7 @@
 <script src="bower_components/jsartoolkit5/build/artoolkit.debug.js"></script>
 <script src="bower_components/jsartoolkit5/js/artoolkit.api.js"></script>
 <script src="js/three.min.js"></script>
+<script src="js/jimp.min.js"></script>
 <script src="bower_components/jsartoolkit5/js/artoolkit.three.js"></script>
 <link async rel="import" href="bower_components/paper-material/paper-material.html">
 <link async rel="import" href="bower_components/google-map/google-map.html" />
@@ -81,7 +82,11 @@
                     </google-map-marker>
                   </google-map>
             </paper-material>
-            <img class="img-overlay"/>
+            <div class="img-overlay" style="bottom:0;left:0;right:100%">
+              <img id="ar1" class="img-overlay ar" style="background:#e0e0e0"/>
+            </div>
+
+            <img id="ar2" class="img-overlay" />
         </div>
     </template>
     <script>
@@ -198,20 +203,58 @@
               });
               arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.kanji', function(markerId) {
                   var markerRoot = arController.createThreeMarker(markerId);
+                  console.log(markerRoot);
                   arScene.scene.add(markerRoot);
               });
+
+              this.qrDetect = function() {
+                console.log("Starting qrDetect");
+                // this generally doesn't find the code unless the entire image
+                // is the QR code. segmentation required.
+                var x = qrcode.decode(renderer.domElement.toDataURL());
+                console.log(x);
+                console.log('in qr detect');
+              }
+              function computeBounds(vertex) {
+                var x_values = vertex.map(function(elt) { return elt[0]; });
+                var x_max = Math.max.apply(null, x_values);
+                var x_min = Math.min.apply(null, x_values);
+                var y_values = vertex.map(function(elt) { return elt[1]; });
+                var y_max = Math.max.apply(null, y_values);
+                var y_min = Math.min.apply(null, y_values);
+                return {x_min: x_min, x_max: x_max, y_min: y_min,
+                  y_max: y_max, width: Math.ceil(x_max - x_min),
+                  height: Math.ceil(y_max - y_min)};
+              }
               // the business end
               arController.addEventListener('getMarker', _.debounce(function(e) {
                 console.log('found marker', e);
+                var subImageBounds = computeBounds(e.data.marker.vertex);
+                console.log(subImageBounds);
                 var frame = renderer.domElement.toDataURL();
-                qrcode.decode(frame);
-                this.$$('.img-overlay').src = frame;
-              }.bind(this), 100))
+                Jimp.read(frame, function (err, image) {
+                    // do stuff with the image (if no exception)
+                    console.log(image);
+                    console.log(this);
+                    // image.color([
+                    //     { apply: 'blue', params: [ -50 ] },
+                    // ]);
+                    // image.dither565();
+                    image.getBase64( "image/png", function(err, dataurl) {this.$.ar1.src = dataurl}.bind(this) )
+
+                }.bind(this));
+                this.$.ar2.src = frame;
+                // img.src = frame;
+                // this.qrDetect()
+
+              }.bind(this), 30))
+
               // this.dumpScene(renderer);
               var tick = function() {
                   arScene.process();
                   arScene.renderOn(renderer);
                   // this.dumpScene(renderer);
+                  // this.qrDetect();
                   requestAnimationFrame(tick);
               }.bind(this);
               tick();
