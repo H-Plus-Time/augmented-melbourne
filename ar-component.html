@@ -242,6 +242,7 @@
                 Odin.processImage(frame).then(function(dataURL) {
                   this.$.ar1.src = dataURL;
                 }.bind(this))
+                qrcode.decode(frame);
                 this.$.ar2.src = frame;
                 // img.src = frame;
                 // this.qrDetect()
