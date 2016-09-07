@@ -1,7 +1,5 @@
 <script>
-  window.Odin = window.Odin || {};
-
-  Odin = {
+  window.Odin = window.Odin || {
     processImage: operative(function(dataURL) {
         var deferred = this.deferred();
         Jimp.read(dataURL).then(function(image) {
