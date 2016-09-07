@@ -212,6 +212,12 @@
                   arScene.scene.add(markerRoot);
               });
 
+              arController.loadMarker('data/Marker16.pat', function(markerId) {
+                  var markerRoot = arController.createThreeMarker(markerId);
+                  console.log(markerRoot);
+                  arScene.scene.add(markerRoot);
+              });
+
               this.qrDetect = function() {
                 console.log("Starting qrDetect");
                 // this generally doesn't find the code unless the entire image

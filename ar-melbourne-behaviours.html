@@ -10,9 +10,11 @@
             //     { apply: 'blue', params: [ -50 ] },
             // ]);
             // image.dither565();
-            // for(int i = 0; i < 4; i++) {
-            //
-            // }
+            var imChunks = [];
+            [1,2,3,4].forEach(function(i) {
+              [1,2,3,4].forEach(function(j) {
+              });
+            })
             image.getBase64(Jimp.MIME_PNG, function(err, src) {
               deferred.fulfill(src);
             });
