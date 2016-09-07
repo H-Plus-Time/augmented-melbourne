@@ -188,31 +188,18 @@
                   ev.preventDefault();
                   rotationTarget += 1;
               }, false);
-              var sphere = new THREE.Mesh(
-                      new THREE.SphereGeometry(0.5, 8, 8),
-                      new THREE.MeshNormalMaterial()
-              );
-              sphere.material.shading = THREE.FlatShading;
-              sphere.position.z = 0.5;
-              var torus = new THREE.Mesh(
-                      new THREE.TorusGeometry(0.3, 0.2, 8, 8),
-                      new THREE.MeshNormalMaterial()
-              );
-              torus.material.shading = THREE.FlatShading;
-              torus.position.z = 0.5;
-              torus.rotation.x = Math.PI/2;
-              arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.hiro', function(markerId) {
-                  var markerRoot = arController.createThreeMarker(markerId);
-                  // add visualizations here
-                  arScene.scene.add(markerRoot);
-              });
-              arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.kanji', function(markerId) {
-                  var markerRoot = arController.createThreeMarker(markerId);
-                  console.log(markerRoot);
-                  arScene.scene.add(markerRoot);
-              });
+              // arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.hiro', function(markerId) {
+              //     var markerRoot = arController.createThreeMarker(markerId);
+              //     // add visualizations here
+              //     arScene.scene.add(markerRoot);
+              // });
+              // arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.kanji', function(markerId) {
+              //     var markerRoot = arController.createThreeMarker(markerId);
+              //     console.log(markerRoot);
+              //     arScene.scene.add(markerRoot);
+              // });
 
-              arController.loadMarker('data/Marker16.pat', function(markerId) {
+              arController.loadMarker('data/marker16.pat', function(markerId) {
                   var markerRoot = arController.createThreeMarker(markerId);
                   console.log(markerRoot);
                   arScene.scene.add(markerRoot);
@@ -247,8 +234,10 @@
                 // process image, output to #ar1 image tag.
                 Odin.processImage(frame).then(function(dataURL) {
                   this.$.ar1.src = dataURL;
+                  qrcode.callback = console.log;
+                  qrcode.decode(dataURL);
                 }.bind(this))
-                qrcode.decode(frame);
+                // qrcode.decode(frame);
                 this.$.ar2.src = frame;
                 // img.src = frame;
                 // this.qrDetect()
