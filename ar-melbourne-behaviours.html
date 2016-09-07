@@ -1,0 +1,22 @@
+<script>
+  window.Odin = window.Odin || {};
+
+  Odin = {
+    processImage: operative(function(dataURL) {
+        var deferred = this.deferred();
+        Jimp.read(dataURL).then(function(image) {
+            // do stuff with the image (if no exception)
+            console.log(image);
+            // image.color([
+            //     { apply: 'blue', params: [ -50 ] },
+            // ]);
+            // image.dither565();
+            image.getBase64(Jimp.MIME_PNG, function(err, src) {
+              deferred.fulfill(src);
+            });
+        })
+    }, [
+      "js/jimp.min.js"
+    ])
+  }
+</script>

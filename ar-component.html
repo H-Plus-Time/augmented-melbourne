@@ -1,5 +1,6 @@
 <link rel='import' href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="ar-melbourne-behaviours.html" />
 <script src="bower_components/jsartoolkit5/build/artoolkit.debug.js"></script>
 <script src="bower_components/jsartoolkit5/js/artoolkit.api.js"></script>
 <script src="js/three.min.js"></script>
@@ -7,8 +8,8 @@
 <script src="bower_components/jsartoolkit5/js/artoolkit.three.js"></script>
 <link async rel="import" href="bower_components/paper-material/paper-material.html">
 <link async rel="import" href="bower_components/google-map/google-map.html" />
-<script src="bower_components/threex.windowresize/threex.windowresize.js"></script>
 <script src="bower_components/underscore/underscore-min.js"></script>
+<script src="bower_components/operative/dist/operative.min.js"></script>
 <script type="text/javascript" src="bower_components/jsqrcode/src/grid.js"></script>
 <script type="text/javascript" src="bower_components/jsqrcode/src/version.js"></script>
 <script type="text/javascript" src="bower_components/jsqrcode/src/detector.js"></script>
@@ -99,6 +100,10 @@
               value: function() { return {latitude: -37.8065131,longitude: 144.9634551}}
             }
           },
+
+          behaviours: [
+            Odin
+          ],
           dumpScene: function(renderer) {
               function errorHandler(e) {
                   console.log(e);
@@ -226,23 +231,17 @@
                   y_max: y_max, width: Math.ceil(x_max - x_min),
                   height: Math.ceil(y_max - y_min)};
               }
+
               // the business end
               arController.addEventListener('getMarker', _.debounce(function(e) {
                 console.log('found marker', e);
                 var subImageBounds = computeBounds(e.data.marker.vertex);
                 console.log(subImageBounds);
                 var frame = renderer.domElement.toDataURL();
-                Jimp.read(frame, function (err, image) {
-                    // do stuff with the image (if no exception)
-                    console.log(image);
-                    console.log(this);
-                    // image.color([
-                    //     { apply: 'blue', params: [ -50 ] },
-                    // ]);
-                    // image.dither565();
-                    image.getBase64( "image/png", function(err, dataurl) {this.$.ar1.src = dataurl}.bind(this) )
-
-                }.bind(this));
+                // process image, output to #ar1 image tag.
+                Odin.processImage(frame).then(function(dataURL) {
+                  this.$.ar1.src = dataURL;
+                }.bind(this))
                 this.$.ar2.src = frame;
                 // img.src = frame;
                 // this.qrDetect()
