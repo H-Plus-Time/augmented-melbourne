@@ -1,0 +1,25 @@
+<dom-module id="paper-toast-notif">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      #toast {
+        --paper-toast-background-color: black;
+        --paper-toast-color: white;
+      }
+    </style>
+
+    <paper-button raised onclick="toastSearching.open()">Styled toast</paper-button>
+
+    <paper-toast raised id="toastSearching" class="fit-bottom" text="Loading! Searching for QR Code"></paper-toast>
+    <paper-toast id="toastFound" class="fit-bottom" text="Found! QR code information will be displayed soon"></paper-toast>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'paper-toast-notif'
+    });
+  </script>
+</dom-module>
