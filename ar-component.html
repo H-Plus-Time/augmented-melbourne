@@ -214,6 +214,7 @@
                 console.log('in qr detect');
               }
               function computeBounds(vertex) {
+                console.log(vertex);
                 var x_values = vertex.map(function(elt) { return elt[0]; });
                 var x_max = Math.max.apply(null, x_values);
                 var x_min = Math.min.apply(null, x_values);
@@ -225,14 +226,21 @@
                   height: Math.ceil(y_max - y_min)};
               }
 
+              function convertPosition(marker) {
+                return {x: marker.pos[0], y: marker.pos[1]}
+              }
+
+
               // the business end
               arController.addEventListener('getMarker', _.debounce(function(e) {
                 console.log('found marker', e);
+                console.log(e.data.marker);
                 var subImageBounds = computeBounds(e.data.marker.vertex);
+                var pos = convertPosition(e.data.marker);
                 console.log(subImageBounds);
                 var frame = renderer.domElement.toDataURL();
                 // process image, output to #ar1 image tag.
-                Odin.processImage(frame).then(function(dataURL) {
+                Odin.processImage(frame, pos).then(function(dataURL) {
                   this.$.ar1.src = dataURL;
                   qrcode.callback = console.log;
                   qrcode.decode(dataURL);

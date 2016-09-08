@@ -23,7 +23,9 @@
         <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment"></style>
         <paper-toast id="toast_notification">
         </paper-toast>
-        <app-location route="{{route}}" use-hash-as-path></app-location>
+        <app-location route="{{route}}"
+        tail="{{subroute}}"
+        use-hash-as-path></app-location>
 
         <!-- this app-route manages the top-level routes -->
         <app-route
@@ -61,6 +63,9 @@
                   <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
                     <ar-component name="active">
                     </ar-component>
+                    <!-- <div name="active">
+                      Stuff
+                    </div> -->
                   </iron-pages>
                 </div>
 
@@ -79,7 +84,14 @@
                 }
             },
 
-
+            ready: function() {
+              this.async(function() {
+                console.log(this.route);
+                if (!this.route.path) {
+                  this.set('route.path', '/active');
+                }
+              });
+            },
 
             attached: function() {
                 this.menuItems = [{
@@ -92,7 +104,6 @@
                 {
                     "text": "About"
                 }]
-                this.route = "#/active";
             }
         })
     </script>
