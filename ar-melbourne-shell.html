@@ -18,6 +18,10 @@
 <link rel="import" href="bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="ar-component.html">
 <link rel="import" href="ar-component-shared-styles.html">
+<link rel="import" href="augmentedMelbourneLandingPage.html">
+<link rel="import" href="augmentedMelbourneAboutPage.html">
+<link rel="import" href="paperToastNotification.html">
+
 <dom-module id="ar-melbourne">
     <template>
         <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment"></style>
@@ -45,8 +49,10 @@
             <app-header-layout>
                 <app-header>
                     <app-toolbar>
+
                         <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
                         <div main-title>Augmented Melbourne</div>
+                          <paperToast></paperToast>
                         <template is="dom-if" if="[[!smallScreen]]">
                         <paper-tabs>
                             <template is="dom-repeat" items="{{menuItems}}">
@@ -55,8 +61,11 @@
                                 </paper-tab>
                             </template>
                         </paper-tabs>
-                        </template>
-                        <paper-icon-button icon="search"></paper-icon-button>
+
+                    </template>
+
+
+                  <paper-icon-button icon="search"></paper-icon-button>
                     </app-toolbar>
                 </app-header>
                 <div style="width:100%">
@@ -68,7 +77,18 @@
                     </div> -->
                   </iron-pages>
                 </div>
+                <div style="width:100%">
+                  <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
+                  <augmented-melbourneLandingPage name="home"></augmented-melbourneLandingPage>
+                  </iron-pages>
+                </div>
+                <div style="width:100%">
+                  <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
+                  <augmented-melbourneAboutPage name="about"></augmented-melbourneAboutPage>
+                  </iron-pages>
+                </div>
 
+          <paper-toast-notif></paper-toast-notif>
             </app-header-layout>
         </app-drawer-layout>
 
@@ -95,6 +115,9 @@
 
             attached: function() {
                 this.menuItems = [{
+                    "text": "Home",
+                    "href": "home"
+                },{
                     "text": "Settings"
                 },
                 {
@@ -102,7 +125,8 @@
                   "href": "active"
                 },
                 {
-                    "text": "About"
+                    "text": "About",
+                    "href": "about"
                 }]
             }
         })

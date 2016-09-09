@@ -1,0 +1,63 @@
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<dom-module id="augmented-melbourneAboutPage">
+  <template>
+    <style>
+
+
+      :host {
+        /*display:inline-block;*/
+         background-image: url(/augmentedMelbourneQRlogo.jpg);
+         display: flex;
+         position:relative;
+         height:calc(100vh - 64px);
+
+      }
+
+      .landingPageContainer{
+        font-family: Arial !important;
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+         margin: 10% 10% 10% 10%;
+         padding: 20px 20px 20px 20px;
+         border-radius: 25px;
+         border: 2px solid black;
+         font-family: Arial !important;
+         background-color:rgba(255,255,255,0.95);
+
+      }
+      paper-button{
+      background-color: black;
+     color: white;
+  }
+  h2{
+    font-size: 2em;
+    font-weight: bold;
+text-align: center;
+  }
+  .buttonsContainer{
+    display: flex;
+    text-align: center;
+  }
+          .aboutButton{flex-grow: 1;}
+    </style>
+    <div class="flex">
+    <div class="landingPageContainer">
+    <h2>About</h2>
+    <p>
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    </p>
+    <div class="buttonsContainer">
+      <paper-button toggles raised class="findQRButton">Click to find QR code</paper-button>
+
+    </div>
+
+  </div>
+</div>
+  </template>
+  <script>
+    Polymer({
+      is: 'augmented-melbourneAboutPage'
+    });
+  </script>
+</dom-module>
