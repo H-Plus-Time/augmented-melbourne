@@ -1,3 +1,4 @@
+<link rel="import" href="bower_components/paper-button/paper-button.html">
 <dom-module id="paper-toast-notif">
   <template>
     <style>
@@ -5,21 +6,37 @@
         display: block;
       }
 
-      #toast {
-        --paper-toast-background-color: black;
+      paper-toast {
         --paper-toast-color: white;
+        font-size: 2em;
+        font-weight: bold;
+        font-family: Arial
       }
     </style>
 
-    <paper-button raised onclick="toastSearching.open()">Styled toast</paper-button>
+    <!-- <paper-button raised onclick="toastSearching.open()">Styled toast</paper-button> -->
 
-    <paper-toast raised id="toastSearching" class="fit-bottom" text="Loading! Searching for QR Code"></paper-toast>
-    <paper-toast id="toastFound" class="fit-bottom" text="Found! QR code information will be displayed soon"></paper-toast>
+    <!-- <paper-toast id="toastSearching" opened duration="0" class="fit-bottom" text="Loading! Searching for QR Code" ></paper-toast> -->
+    <!-- <paper-toast opened="false" id="toastSearching"  duration="0" class="fit-bottom" text="Loading! Searching for QR Code" ></paper-toast> -->
+
+    <paper-toast opened$="{{fooOpen}}" id="toastFound" duration="0" class="fit-bottom" text="Found! QR code information will be displayed soon"></paper-toast>
 
   </template>
   <script>
     Polymer({
-      is: 'paper-toast-notif'
+      is: 'paper-toast-notif',
+      foo: function(){
+         this.dialogOpen = true;
+      },
+      properties: {
+        fooOpen: {
+          type: String,
+          value: function() { return 'true'}
+        }
+      },
+      attached: function() {
+        // this.set('fooOpen', 'true');
+      }
     });
   </script>
 </dom-module>
