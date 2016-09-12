@@ -10,23 +10,7 @@
 <link async rel="import" href="bower_components/google-map/google-map.html" />
 <script src="bower_components/underscore/underscore-min.js"></script>
 <script src="bower_components/operative/dist/operative.min.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/grid.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/version.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/detector.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/formatinf.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/errorlevel.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/bitmat.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/datablock.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/bmparser.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/datamask.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/rsdecoder.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/gf256poly.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/gf256.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/decoder.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/qrcode.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/findpat.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/alignpat.js"></script>
-<script type="text/javascript" src="bower_components/jsqrcode/src/databr.js"></script>
+<script src="js/qr.js"></script>
 <dom-module id="ar-component">
     <template>
         <style include="iron-flex iron-flex-alignment">
@@ -155,6 +139,7 @@
           onSuccess: function(arScene, arController, arCamera) {
               document.body.className = arController.orientation;
               console.log(this);
+              qr = new QrCode();
               var renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
               if (arController.orientation === 'portrait') {
                   var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
@@ -188,16 +173,6 @@
                   ev.preventDefault();
                   rotationTarget += 1;
               }, false);
-              // arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.hiro', function(markerId) {
-              //     var markerRoot = arController.createThreeMarker(markerId);
-              //     // add visualizations here
-              //     arScene.scene.add(markerRoot);
-              // });
-              // arController.loadMarker('bower_components/jsartoolkit5/examples/Data/patt.kanji', function(markerId) {
-              //     var markerRoot = arController.createThreeMarker(markerId);
-              //     console.log(markerRoot);
-              //     arScene.scene.add(markerRoot);
-              // });
 
               arController.loadMarker('data/marker16.pat', function(markerId) {
                   var markerRoot = arController.createThreeMarker(markerId);
@@ -205,16 +180,8 @@
                   arScene.scene.add(markerRoot);
               });
 
-              this.qrDetect = function() {
-                console.log("Starting qrDetect");
-                // this generally doesn't find the code unless the entire image
-                // is the QR code. segmentation required.
-                var x = qrcode.decode(renderer.domElement.toDataURL());
-                console.log(x);
-                console.log('in qr detect');
-              }
               function computeBounds(vertex) {
-                console.log(vertex);
+                // console.log(vertex);
                 var x_values = vertex.map(function(elt) { return elt[0]; });
                 var x_max = Math.max.apply(null, x_values);
                 var x_min = Math.min.apply(null, x_values);
@@ -229,26 +196,50 @@
               function convertPosition(marker) {
                 return {x: marker.pos[0], y: marker.pos[1]}
               }
+              function handleQRScanResponse(result, err) {
+                if(result) {
+                  fetch(result)
+                  .then( (resp) => {
+                    console.log(resp)
+                    var urlParts = resp.url.split("/");
+                    var location = urlParts[urlParts.length - 1].split(",");
+                    var latitude = location[0];
+                    var longitude = location[1];
+                    console.log("%c Latitude: %s\nLongitude: %s\n", 'color:red;font-size:1.5em', latitude, longitude);
+                    this.fire('iron-announce', {text: result}, {bubbles: true});
+                    console.log('%c %s', 'color:red;font-size:1.5em', result);
+                  })
 
+                  /*
+                  0. If in cache, skip to 4.
+                  1. Fetch the bit.ly url (resolves to google.com/maps/search/lat,long)
+                  2. Extract lat, long from resolved url
+                  3. Cache shortened url : lat,long pair.
+                  4. query project api with lat, long.
+                  5. Announce title, short description, elevation, etc.
+                  */
+
+                }
+              }
 
               // the business end
               arController.addEventListener('getMarker', _.debounce(function(e) {
-                console.log('found marker', e);
-                console.log(e.data.marker);
+                // This fires far too often, do not notify the user
+                // console.log('found marker', e);
+                // console.log(e.data.marker);
                 var subImageBounds = computeBounds(e.data.marker.vertex);
                 var pos = convertPosition(e.data.marker);
-                console.log(subImageBounds);
+                // console.log(subImageBounds);
                 var frame = renderer.domElement.toDataURL();
                 // process image, output to #ar1 image tag.
                 Odin.processImage(frame, pos).then(function(dataURL) {
                   this.$.ar1.src = dataURL;
-                  qrcode.callback = console.log;
-                  qrcode.decode(dataURL);
+                  // qrcode.callback = handleQRScanResponse;
+                  qr.callback = handleQRScanResponse.bind(this);
+                  qr.decode(dataURL);
+                  // qrcode.decode(dataURL);
                 }.bind(this))
-                // qrcode.decode(frame);
                 this.$.ar2.src = frame;
-                // img.src = frame;
-                // this.qrDetect()
 
               }.bind(this), 30))
 
