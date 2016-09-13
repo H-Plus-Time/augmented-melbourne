@@ -30,6 +30,7 @@
     "jimp": "^0.2.27",
     "node-bitlyapi": "^0.4.0",
     "qrcode": "^0.4.4",
+    "qrcode-reader": "^0.2.1",
     "three": "*"
   }
 }

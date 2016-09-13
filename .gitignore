@@ -2,5 +2,6 @@ bower_components
 node_modules
 js/three.min.js
 js/jimp.min.js
+js/qr.js
 *.log
 config.json
