@@ -1,5 +1,6 @@
 <link rel="import" href="bower_components/paper-button/paper-button.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="augmentedMelbourneFooter.html">
 <dom-module id="augmented-melbourneLandingPage">
   <template>
     <style>
@@ -18,8 +19,8 @@
         font-family: Arial !important;
         @apply(--layout-vertical);
         @apply(--layout-center);
-         margin: 10% 0% 10% 0%;
-         padding: 20px 20px 20px 20px;
+        margin: 10% 0% 10% 0%;
+        padding: 20px 20px 20px 20px;
 
          font-family: Arial !important;
          background-color:rgba(230,230,230,0.95);
@@ -53,7 +54,10 @@ text-align: center;
     </div>
 
   </div>
+  <augmented-melbourne-footer></augmented-melbourne-footer>
 </div>
+
+
   </template>
   <script>
     Polymer({

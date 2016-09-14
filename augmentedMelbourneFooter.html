@@ -1,0 +1,49 @@
+<dom-module id="augmented-melbourne-footer">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .mainFooter{
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    background-color: #666;
+    margin-top:40px;
+
+
+}
+
+.mainFooter p{
+    width:90%;
+    margin: 2% auto;
+    color: #ffb366;
+}
+
+.mainFooter a:link, .mainFooter a:visited{
+    color: #ffb366;
+
+
+}
+
+.mainFooter a:hover,
+.mainFooter a:active,
+.mainFooter .active a:link,
+.mainFooter .active a:visited
+{
+    color: #e6ffcc;
+
+
+}
+    </style>
+    <footer class="mainFooter">
+	<p>Copyright &copy: Augmented Melbourne | <a href="#">blahblah.com</a> | <a href="#">blahblah.com</a> |</p>
+</footer>
+  </template>
+  <script>
+    Polymer({
+      is: 'augmented-melbourne-footer'
+    });
+  </script>
+</dom-module>
