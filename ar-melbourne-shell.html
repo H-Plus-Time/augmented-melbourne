@@ -21,6 +21,7 @@
 <link rel="import" href="augmentedMelbourneLandingPage.html">
 <link rel="import" href="augmentedMelbourneAboutPage.html">
 <link rel="import" href="paperToastNotification.html">
+<link rel="import" href="ar-maps-view.html" />
 
 <dom-module id="ar-melbourne">
     <template>
@@ -83,23 +84,12 @@
                   <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
                     <ar-component name="active">
                     </ar-component>
-                    <!-- <div name="active">
-                      Stuff
-                    </div> -->
+                    <ar-maps-view name="navigation"></ar-maps-view>
+                    <augmented-melbourneLandingPage name="home"></augmented-melbourneLandingPage>
+                    <augmented-melbourneAboutPage name="about"></augmented-melbourneAboutPage>
                   </iron-pages>
                 </div>
-                <div style="width:100%">
-                  <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
-                  <augmented-melbourneLandingPage name="home"></augmented-melbourneLandingPage>
-                  </iron-pages>
-                </div>
-                <div style="width:100%">
-                  <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
-                  <augmented-melbourneAboutPage name="about"></augmented-melbourneAboutPage>
-                  </iron-pages>
-                </div>
-
-          <paper-toast-notif></paper-toast-notif>
+          <!-- <paper-toast-notif></paper-toast-notif> -->
             </app-header-layout>
         </app-drawer-layout>
 
@@ -134,6 +124,10 @@
                 {
                   "text": "Active",
                   "href": "active"
+                },
+                {
+                  "text": "Navigation",
+                  "href": "navigation"
                 },
                 {
                     "text": "About",

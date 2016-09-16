@@ -1,0 +1,72 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link async rel="import" href="bower_components/google-map/google-map.html" />
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+<dom-module id="ar-maps-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position:relative;
+        height:calc(100vh - 64px);
+      }
+      google-map {
+        flex:1;
+      }
+    </style>
+    <paper-input label="Search...">Stuff</paper-input>
+    <google-map map="{{map}}" latitude="37.779"
+              longitude="-122.3892">
+      <google-map-marker lat="{{currentLat}}" long="{{currentLong}}">
+        <iron-icon icon="maps:my-location"></iron-icon>
+      </google-map-marker>
+    </google-map>
+  </template>
+  <script>
+    Polymer({
+      is: 'ar-maps-view',
+      properties: {
+        destination: {
+
+        },
+        directions: {
+
+        }
+      },
+      attached: function() {
+
+      },
+      geoSearchQR: function() {
+        // get current lat, long
+        // fetch list of qr codes within range
+        fetch(`/geoquery?lat=${this.lat}&long=${this.long}&range=${range}`)
+        .then( (resp) => { return resp.json() })
+        .then(function(qrCodes) {
+          console.log(qrCodes);
+          this.fire('iron-announce', {details: `${numQRs} in your area`}, {bubbles: true});
+          this.markers = qrCodes;
+        }.bind(this))
+      },
+      setCourse: function() {
+        // register for geofenced push notifications. Requires cordova shell
+        window.geofence.addOrUpdate({
+            id:             "examplegeofenceid", //A unique identifier of geofence
+            latitude:       this.destination.lat, //Geo latitude of geofence
+            longitude:      this.destination.long, //Geo longitude of geofence
+            radius:         30, //Radius of geofence in meters
+            transitionType: 1, //Type of transition 1 - Enter, 2 - Exit, 3 - Both
+            notification: {         //Notification object
+                title:          "Hello world", //Title of notification
+                text:           "Hello world", //Text of notification
+                openAppOnClick: true,//is main app activity should be opened after clicking on notification
+            }
+        }).then(function () {
+            console.log('Geofence successfully added');
+        }, function (reason) {
+            console.log('Adding geofence failed', reason);
+        });
+        // Default handler for maps links is the maps app.
+        window.open(`https://google.com/maps/dir/${this.lat},${this.long}/${this.destination.lat},${this.destination.long}`)
+      }
+    });
+  </script>
+</dom-module>
