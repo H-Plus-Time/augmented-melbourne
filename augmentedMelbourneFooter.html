@@ -3,6 +3,7 @@
     <style>
       :host {
         display: block;
+
       }
 
       .mainFooter{
@@ -11,6 +12,7 @@
     margin-bottom: 10px;
     background-color: #666;
     margin-top:40px;
+       font-family: Arial !important;
 
 
 }
@@ -18,11 +20,11 @@
 .mainFooter p{
     width:90%;
     margin: 2% auto;
-    color: #ffb366;
+    color: white;
 }
 
 .mainFooter a:link, .mainFooter a:visited{
-    color: #ffb366;
+    color: white;
 
 
 }
@@ -33,12 +35,16 @@
 .mainFooter .active a:visited
 {
     color: #e6ffcc;
-
-
 }
+a{
+  text-decoration: none;
+}
+
     </style>
     <footer class="mainFooter">
-	<p>Copyright &copy: Augmented Melbourne | <a href="#">blahblah.com</a> | <a href="#">blahblah.com</a> |</p>
+	<p>Copyright &copy: Augmented Melbourne | <a href=">https://data.melbourne.vic.gov.au">City of Melbourne Open Data </a> <img src="/cityOfMelbourneLogo.jpg" height="25" width="25"> | <a href="#">IBM BLUEMIX</a> <img src="/bluemix-logo.png" height="25" width="25"> |</p>
+<!-- Reference: city of melbourne logo https://twitter.com/cityofmelbourne  -->
+<!-- Reference: IMB bluemix logo https://www.google.com.au/search?q=bluemix&espv=2&rlz=1C1CHBF_en-GBAU705AU705&biw=749&bih=770&tbm=isch&source=lnms&sa=X&ved=0ahUKEwiQhsbay5LPAhUGj5QKHYp0CV4Q_AUIBygC#imgrc=TXh5hiyzqiSzaM%3A -->
 </footer>
   </template>
   <script>

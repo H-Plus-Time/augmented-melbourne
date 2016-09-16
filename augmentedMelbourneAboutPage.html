@@ -11,7 +11,7 @@
          background-image: url(/augmentedMelbourneQRlogo.jpg);
          display: flex;
          position:relative;
-         height:calc(100vh - 64px);
+         /*height:calc(300vh - 64px);*/
 
       }
 
@@ -19,9 +19,8 @@
         font-family: Arial !important;
         @apply(--layout-vertical);
         @apply(--layout-center);
-         margin: 10% 0% 10% 0%;
+         margin: 10% 0% 0% 0%;
          padding: 20px 20px 20px 20px;
-
          font-family: Arial !important;
          background-color:rgba(230,230,230,0.95);
 
@@ -40,18 +39,60 @@ text-align: center;
     text-align: center;
   }
           .aboutButton{flex-grow: 1;}
+
+.teamPhoto{
+  height: auto;
+  width: 100%;
+}
+.aboutContent{
+  width:80%;
+}
+
+hr{
+  display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style:solid;
+    border-width: 2px;
+}
     </style>
     <div class="flex">
     <div class="aboutContainer">
+      <div class="aboutContent">
     <h2>About</h2>
+    <h5>“Augmented Melbourne guiding you to your destination” </h5>
     <p>
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    Augmented Melbourne is a brand new web app developed by Final year I.T students from RMIT, to assist the visually impaired navigate around Melbourne CBD with the help of Open-data Enabled Mobile Navigation Aid. The visually impaired are constantly facing issues every day to travel from point A to point B in their daily life, they unaware of their current geographical location and neither any information about the place. We are creating this new web app ‘Augmented Melbourne’ to make their life easier and to aid them in this situation.
     </p>
-    <div class="buttonsContainer">
-      <paper-button toggles raised class="findQRButton">Click to find QR code</paper-button>
-
-    </div>
-
+    <p>
+      Our goal is focused on assisting the visually impaired to locate a point of interest and government buildings using QR codes. Our vision was to give the visually impaired back their freedom and make them in dependable without the help of others, also to have a normal as possible life. Melbourne has been our test subject for this web app as seek to expand this overall Australia and possibly around the world.
+    </p>
+    <!-- <div class="buttonsContainer"> -->
+      <!-- <paper-button toggles raised class="findQRButton">Click to find QR code</paper-button> -->
+    <!-- </div> -->
+<hr>
+  <h3>The Team</h3>
+  <img class="teamPhoto" src="/teamPhoto.jpg" alt="">
+<hr>
+  <img src="" alt="" height="200" width="150">
+  <h4>Lachlan Gordon</h4>
+  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita</p>
+<hr>
+  <img src="" alt="" height="200" width="150">
+  <h4>Nicholas Roberts</h4>
+  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita</p>
+<hr>
+  <img src="" alt="" height="200" width="150">
+  <h4>Lazar Golijanin</h4>
+  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita</p>
+<hr>
+  <img src="" alt="" height="200" width="150">
+  <h4>Edwin Davis</h4>
+  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita</p>
+<hr>
+</div>
   </div>
     <augmented-melbourne-footer></augmented-melbourne-footer>
 </div>
