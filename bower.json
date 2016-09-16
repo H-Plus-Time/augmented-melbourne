@@ -30,6 +30,7 @@
     "threex.windowresize": "*",
     "underscore": "^1.8.3",
     "operative": "^0.4.4",
-    "jsqrcode": "https://github.com/LazarSoft/jsqrcode.git"
+    "jsqrcode": "https://github.com/LazarSoft/jsqrcode.git",
+    "paper-input": "^1.1.19"
   }
 }
