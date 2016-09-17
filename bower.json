@@ -31,6 +31,9 @@
     "underscore": "^1.8.3",
     "operative": "^0.4.4",
     "jsqrcode": "https://github.com/LazarSoft/jsqrcode.git",
-    "paper-input": "^1.1.19"
+    "paper-input": "^1.1.19",
+    "iron-ajax": "^1.4.3",
+    "google-map": "^1.1.11",
+    "font-awesome": "^4.6.3"
   }
 }

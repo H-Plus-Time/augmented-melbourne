@@ -1,6 +1,6 @@
 <link rel="import" href="bower_components/paper-button/paper-button.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="augmentedMelbourneFooter.html">
+<link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
 <dom-module id="augmented-melbourneAboutPage">
   <template>
     <style>
@@ -8,11 +8,9 @@
 
       :host {
         /*display:inline-block;*/
-         background-image: url(/augmentedMelbourneQRlogo.jpg);
+         background-image: url(/images/augmentedMelbourneQRlogo.jpg);
          display: flex;
          position:relative;
-         /*height:calc(300vh - 64px);*/
-
       }
 
       .aboutContainer{
@@ -58,6 +56,12 @@ hr{
     border-width: 2px;
 }
     </style>
+    <iron-ajax
+    auto
+    url="/data/team.json"
+    handle-as="json"
+    last-response="{{team}}"
+    debounce-duration="300"></iron-ajax>
     <div class="flex">
     <div class="aboutContainer">
       <div class="aboutContent">
@@ -65,36 +69,75 @@ hr{
     <h5>“Augmented Melbourne guiding you to your destination” </h5>
     <p>
     Augmented Melbourne is a brand new web app developed by Final year I.T students from RMIT, to assist the visually impaired navigate around Melbourne CBD with the help of Open-data Enabled Mobile Navigation Aid. The visually impaired are constantly facing issues every day to travel from point A to point B in their daily life, they unaware of their current geographical location and neither any information about the place. We are creating this new web app ‘Augmented Melbourne’ to make their life easier and to aid them in this situation.
-    </p>
+  </p>￼
+￼
+Ask when a site requires access to your camera (recommended)
+￼
+Do not allow sites to access your camera
+￼Manage exceptions...
+Unsandboxed plug-in access
+
+￼
+Allow all sites to use a plug-in to access your computer
+￼
+Ask when a site wants to use a plug-in to access your computer (recommended)
+￼
+Do not allow any sites to use a plug-in to access your computer
+￼Manage exceptions...
+Automatic downloads
+
+￼
+Allow all sites to download multiple files automatically
+￼
+Ask when a site tries to download files automatically after the first file (recommended)
+￼
+Do not allow any site to download multiple files automatically
+￼Manage exceptions...
+MIDI devices full control
+
+￼
+Allow all sites to use system exclusive messages to access MIDI devices
+￼
+Ask me when a site wants to use system exclusive messages to access MIDI devices (recommended)
+￼
+Do not allow any sites to use system exclusive messages to access MIDI devices
+￼Manage exceptions...
+USB Devices
+
+￼Manage...
+Background sync
+
+￼
+Allow recently closed sites to finish sending and receiving data (recommended)
+￼
+Do not allow recently closed sites to finish sending and receiving data
+￼Manage exceptions...
+Zoom Levels
+
+￼Manage...
+Full screen
+
+
     <p>
       Our goal is focused on assisting the visually impaired to locate a point of interest and government buildings using QR codes. Our vision was to give the visually impaired back their freedom and make them in dependable without the help of others, also to have a normal as possible life. Melbourne has been our test subject for this web app as seek to expand this overall Australia and possibly around the world.
     </p>
     <!-- <div class="buttonsContainer"> -->
       <!-- <paper-button toggles raised class="findQRButton">Click to find QR code</paper-button> -->
     <!-- </div> -->
-<hr>
-  <h3>The Team</h3>
-  <img class="teamPhoto" src="/teamPhoto.jpg" alt="">
-<hr>
-  <img src="" alt="" height="200" width="150">
-  <h4>Lachlan Gordon</h4>
-  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita</p>
-<hr>
-  <img src="" alt="" height="200" width="150">
-  <h4>Nicholas Roberts</h4>
-  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita</p>
-<hr>
-  <img src="" alt="" height="200" width="150">
-  <h4>Lazar Golijanin</h4>
-  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita</p>
-<hr>
-  <img src="" alt="" height="200" width="150">
-  <h4>Edwin Davis</h4>
-  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita</p>
-<hr>
+    <hr>
+      <h3>The Team</h3>
+      <img class="teamPhoto" src="/images/team.jpg" alt="">
+    <hr>
+    <template is="dom-repeat" items="[[team]]">
+      <h4>[[item.name]]</h4>
+      <img src="/images/[[item.img]]" alt="[[item.name]]" height="200" width="150"/>
+      <p>
+        [[item.description]]
+      </p>
+      <hr />
+    </template>
 </div>
   </div>
-    <augmented-melbourne-footer></augmented-melbourne-footer>
 </div>
 
   </template>

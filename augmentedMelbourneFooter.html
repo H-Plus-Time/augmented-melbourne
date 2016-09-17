@@ -1,51 +1,45 @@
+<link rel="import" href="bower_components/polymer/polymer.html" />
+<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+<link rel="import" href="bower_components/iron-icon/iron-icon.html">
 <dom-module id="augmented-melbourne-footer">
   <template>
     <style>
-      :host {
-        display: block;
-
+      :host{
+        display:flex;
+        justify-content:space-around;
+        width: 100%;
+        background-color: #666;
+        height:30px;
+        padding: 20px 0px 20px 0px;
+        font-family: Arial !important;
       }
 
-      .mainFooter{
-    width: 100%;
-    float: left;
-    margin-bottom: 10px;
-    background-color: #666;
-    margin-top:40px;
-       font-family: Arial !important;
+      :host p{
+        margin: 2% auto;
+        color: white;
+      }
 
+      :host a:link, :host a:visited{
+        color: white;
+      }
 
-}
-
-.mainFooter p{
-    width:90%;
-    margin: 2% auto;
-    color: white;
-}
-
-.mainFooter a:link, .mainFooter a:visited{
-    color: white;
-
-
-}
-
-.mainFooter a:hover,
-.mainFooter a:active,
-.mainFooter .active a:link,
-.mainFooter .active a:visited
-{
-    color: #e6ffcc;
-}
-a{
-  text-decoration: none;
-}
+      :host a:hover,
+      :host a:active,
+      :host .active a:link,
+      :host .active a:visited
+      {
+        color: #e6ffcc;
+      }
+      a{
+        text-decoration: none;
+      }
 
     </style>
-    <footer class="mainFooter">
-	<p>Copyright &copy: Augmented Melbourne | <a href=">https://data.melbourne.vic.gov.au">City of Melbourne Open Data </a> <img src="/cityOfMelbourneLogo.jpg" height="25" width="25"> | <a href="#">IBM BLUEMIX</a> <img src="/bluemix-logo.png" height="25" width="25"> |</p>
-<!-- Reference: city of melbourne logo https://twitter.com/cityofmelbourne  -->
-<!-- Reference: IMB bluemix logo https://www.google.com.au/search?q=bluemix&espv=2&rlz=1C1CHBF_en-GBAU705AU705&biw=749&bih=770&tbm=isch&source=lnms&sa=X&ved=0ahUKEwiQhsbay5LPAhUGj5QKHYp0CV4Q_AUIBygC#imgrc=TXh5hiyzqiSzaM%3A -->
-</footer>
+    <div>
+      Copyright &copy: Augmented Melbourne | <a href="https://data.melbourne.vic.gov.au">City of Melbourne Open Data </a> <img src="/images/cityOfMelbourneLogo.jpg" height="25" width="25"> | <a href="#">IBM BLUEMIX</a> <img src="/images/bluemix-logo.png" height="25" width="25">
+    </div>
+    <!-- Reference: city of melbourne logo https://twitter.com/cityofmelbourne  -->
+    <!-- Reference: IMB bluemix logo https://www.google.com.au/search?q=bluemix&espv=2&rlz=1C1CHBF_en-GBAU705AU705&biw=749&bih=770&tbm=isch&source=lnms&sa=X&ved=0ahUKEwiQhsbay5LPAhUGj5QKHYp0CV4Q_AUIBygC#imgrc=TXh5hiyzqiSzaM%3A -->
   </template>
   <script>
     Polymer({

@@ -22,6 +22,7 @@
 <link rel="import" href="augmentedMelbourneAboutPage.html">
 <link rel="import" href="paperToastNotification.html">
 <link rel="import" href="ar-maps-view.html" />
+<link rel="import" href="augmentedMelbourneFooter.html" />
 
 <dom-module id="ar-melbourne">
     <template>
@@ -36,6 +37,20 @@
           padding-left:10px;
           padding-right:10px;
         }
+
+        .content {
+          @apply(--layout-flex);
+          min-height:calc(100vh - 134px);
+          width:100%;
+          display:flex;
+        }
+        .content > iron-pages {
+          flex:1;
+        }
+
+    app-header paper-icon-button {
+      --paper-icon-button-ink-color: white;
+    }
         </style>
         <paper-toast id="toast_notification">
         </paper-toast>
@@ -80,7 +95,7 @@
                   <paper-icon-button icon="search"></paper-icon-button>
                     </app-toolbar>
                 </app-header>
-                <div style="width:100%">
+                <div class="content">
                   <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
                     <ar-component name="active">
                     </ar-component>
@@ -89,6 +104,9 @@
                     <augmented-melbourneAboutPage name="about"></augmented-melbourneAboutPage>
                   </iron-pages>
                 </div>
+                <footer>
+                  <augmented-melbourne-footer hidden$="[[activeMode]]"></augmented-melbourne-footer>
+                </footer>
           <!-- <paper-toast-notif></paper-toast-notif> -->
             </app-header-layout>
         </app-drawer-layout>
@@ -102,9 +120,18 @@
                     type: Boolean,
                     notify: true,
                     value: function() { return false; }
+                },
+                activeMode: {
+                    type: Boolean,
+                    computed: 'computeActiveMode(routeData.view)'
                 }
             },
-
+            computeActiveMode: function(view) {
+              if(['active', 'navigation'].indexOf(view) != -1) {
+                return true;
+              }
+              return false;
+            },
             ready: function() {
               this.async(function() {
                 console.log(this.route);
