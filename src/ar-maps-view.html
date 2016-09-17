@@ -1,6 +1,6 @@
-<link rel="import" href="bower_components/polymer/polymer.html">
-<link async rel="import" href="bower_components/google-map/google-map.html" />
-<link rel="import" href="bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link async rel="import" href="../bower_components/google-map/google-map.html" />
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <dom-module id="ar-maps-view">
   <template>
     <style>
@@ -30,6 +30,10 @@
         },
         directions: {
 
+        },
+        radius: {
+          type: Number,
+          value: function() { return 500 }
         }
       },
       attached: function() {
@@ -38,7 +42,7 @@
       geoSearchQR: function() {
         // get current lat, long
         // fetch list of qr codes within range
-        fetch(`/geoquery?lat=${this.lat}&long=${this.long}&range=${range}`)
+        fetch(`/geoquery?lat=${this.lat}&long=${this.long}&radius=${this.radius}`)
         .then( (resp) => { return resp.json() })
         .then(function(qrCodes) {
           console.log(qrCodes);

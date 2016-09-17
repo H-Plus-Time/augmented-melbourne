@@ -1,17 +1,17 @@
 [{
     "name": "Lachlan Gordon",
     "description": "lorem ipsum",
-    "img": "stock_team.png"
+    "img": "team.jpg"
 }, {
     "name": "Nicholas Roberts",
     "description": "lorem ipsum",
-    "img": "stock_team.png"
+    "img": "team.jpg"
 }, {
     "name": "Lazar Golijanin",
     "description": "lorem ipsum",
-    "img": "stock_team.png"
+    "img": "team.jpg"
 }, {
     "name": "Edwin Davis",
     "description": "lorem ipsum",
-    "img": "stock_team.png"
+    "img": "team.jpg"
 }]

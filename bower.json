@@ -34,6 +34,7 @@
     "paper-input": "^1.1.19",
     "iron-ajax": "^1.4.3",
     "google-map": "^1.1.11",
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "platinum-push-messaging": "^1.0.5"
   }
 }
