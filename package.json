@@ -7,7 +7,7 @@
     "copy": "node build.js",
     "clean": "rm -r bower_components && rm -r node_modules",
     "bower": "bower install",
-    "browser-sync": "browser-sync start --server --files '*.html' --reload-delay=300 --reload-debounce=500",
+    "browser-sync": "browser-sync start --server --files 'src/*.html' --reload-delay=300 --reload-debounce=500",
     "deploy": "bower install",
     "dev": "npm run copy && npm run bower && npm run browser-sync"
   },

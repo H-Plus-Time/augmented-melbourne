@@ -23,7 +23,8 @@
 <link rel="import" href="paperToastNotification.html">
 <link rel="import" href="ar-maps-view.html" />
 <link rel="import" href="augmentedMelbourneFooter.html" />
-
+<script src="../bower_components/pouchdb/dist/pouchdb.min.js"></script>
+<script src="../bower_components/pouchdb-find/dist/pouchdb.find.min.js"></script>
 <dom-module id="ar-melbourne">
     <template>
         <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment">
@@ -161,6 +162,19 @@
                     "href": "about"
                 }]
                 Polymer.IronA11yAnnouncer.requestAvailability();
+                // replace this with production cloudant url
+                var db = new PouchDB('geolocations');
+                db.replicate.from('http://localhost:15984/geolocations', {
+                  live: true,
+                  retry: true,
+                  filter: '_view',
+                  view: '_views/coordinates_view'
+                }).on('change', (info) => console.log(info))
+                .on('paused', (err) => console.log(err))
+                .on('active', () => { })
+                .on('denied', (err) => console.log(err))
+                .on('complete', (info) => console.log(info))
+                .on('error', (err) => console.log(err))
             }
         })
     </script>
