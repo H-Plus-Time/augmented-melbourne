@@ -1,15 +1,11 @@
-FROM registry.ng.bluemix.net/ibmnode
+FROM node:latest
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /src
+ADD . .
 
-COPY package.json /usr/src/app
 RUN npm install
-RUN bower install
-COPY . /usr/src/app
+RUN npm install -g bower
+RN bower --allow-root install
 
-ENV NODE_ENV production
-
-EXPOSE 3000
-
-CMD ["npm", "start"]
+EXPOSE 4000
+CMD ["npm", "dev"]
