@@ -163,18 +163,29 @@
                 }]
                 Polymer.IronA11yAnnouncer.requestAvailability();
                 // replace this with production cloudant url
+                // db will only have the index of lat,lon, title, details_id, url
                 var db = new PouchDB('geolocations');
                 db.replicate.from('http://localhost:15984/geolocations', {
                   live: true,
                   retry: true,
                   filter: '_view',
-                  view: '_views/coordinates_view'
+                  view: '_views/coordinates_view',
+                  fields: ['lat', 'lon', '_id']
                 }).on('change', (info) => console.log(info))
                 .on('paused', (err) => console.log(err))
                 .on('active', () => { })
                 .on('denied', (err) => console.log(err))
                 .on('complete', (info) => console.log(info))
                 .on('error', (err) => console.log(err))
+                // to fetch extra details pertinent to a qr code:
+                // remoteDb = PouchDB('http://localhost:15984/geolocations');
+                // db.find({selector: {lat: {$exists: true}}, limit: 1}).then((resp) => {
+                // return resp.docs[0];
+                // })
+                // .then((qr_doc) => {
+                //   return remoteDB.find({selector: {_id: qr_doc.details_id}})
+                // })
+                // .then( (resp) => console.log(resp.docs[0]) )
             }
         })
     </script>
