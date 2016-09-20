@@ -5,3 +5,4 @@ js/jimp.min.js
 js/qr.js
 *.log
 config.json
+*.log*

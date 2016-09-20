@@ -162,6 +162,7 @@
                     "href": "about"
                 }]
                 Polymer.IronA11yAnnouncer.requestAvailability();
+                this.fire('iron-announce', {details: 'hello world'}, {bubbles: true});
                 // replace this with production cloudant url
                 // db will only have the index of lat,lon, title, details_id, url
                 var db = new PouchDB('geolocations');
@@ -176,7 +177,15 @@
                 .on('active', () => { })
                 .on('denied', (err) => console.log(err))
                 .on('complete', (info) => console.log(info))
-                .on('error', (err) => console.log(err))
+                .on('error', (err) => console.log(err));
+                db.creatIndex({
+                  index: {
+                    fields: ["lat", "lon"]
+                  }
+                });
+                // to query for nearby qr codes, sadly geopouch is not available
+                // in browserified form.
+                // instead
                 // to fetch extra details pertinent to a qr code:
                 // remoteDb = PouchDB('http://localhost:15984/geolocations');
                 // db.find({selector: {lat: {$exists: true}}, limit: 1}).then((resp) => {
