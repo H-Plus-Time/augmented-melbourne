@@ -5,7 +5,7 @@ ADD . .
 
 RUN npm install
 RUN npm install -g bower
-RN bower --allow-root install
+RUN bower --allow-root install
 
-EXPOSE 4000
-CMD ["npm", "dev"]
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
