@@ -1,27 +1,63 @@
 <script src="../bower_components/operative/dist/operative.min.js"></script>
+
 <script>
   window.Odin = window.Odin || {
-    processImage: operative(function(dataURL, pos) {
+    processImage: operative(function(dataURL, subImageBounds) {
         var deferred = this.deferred();
         Jimp.read(dataURL).then(function(image) {
             // do stuff with the image (if no exception)
-            // console.log(image);
-            // image.color([
-            //     { apply: 'blue', params: [ -50 ] },
-            // ]);
-            // image.dither565();
-            var imChunks = [];
-            [1,2,3,4].forEach(function(i) {
-              [1,2,3,4].forEach(function(j) {
-              });
-            })
+            var d = new Date();
+            var preCropTime = d.getTime();
+      //      image.crop(subImageBounds.x_min, subImageBounds.y_min, subImageBounds.width, subImageBounds.height);
+            var d2 = new Date();
+            var postCropTime = d2.getTime();
+            var timeToCrop = postCropTime - preCropTime;
+            console.log("crop time = " + timeToCrop + "ms");
+            console.log(typeof image);
+
             image.getBase64(Jimp.MIME_PNG, function(err, src) {
               deferred.fulfill(src);
             });
+
+
         })
+
     }, [
       "js/jimp.min.js"
-    ])
+    ]),
+    scaleBounds: function(subImageBounds, arController, renderer){
+
+        var scaleFactor = (renderer.domElement.offsetWidth - 1) /  arController.videoWidth;
+        subImageBounds.x_max = Math.floor(subImageBounds.x_max * scaleFactor);
+        subImageBounds.x_min = Math.floor(subImageBounds.x_min * scaleFactor);
+        subImageBounds.y_max = Math.floor(subImageBounds.y_max * scaleFactor);
+        subImageBounds.y_min = Math.floor(subImageBounds.y_min * scaleFactor);
+        subImageBounds.width = subImageBounds.x_max - subImageBounds.x_min;
+        subImageBounds.height = subImageBounds.y_max - subImageBounds.y_min;
+
+        return subImageBounds;
+
+    },
+    handleQRScanResponse: function(result, err) {
+        console.log("processing QR");
+        if (result) {
+            fetch(result).then((resp) => {
+                console.log(resp);
+            var urlParts = resp.url.split("/");
+            var location = urlParts[urlParts.length - 1].split(",");
+            var latitude = location[0];
+            var longitude = location[1];
+            console.log("%c Latitude: %s\nLongitude: %s\n", 'color:red;font-size:1.5em', latitude, longitude);
+//            this.fire('iron-announce', {text: result}, {bubbles: true});
+            console.log('%c %s', 'color:red;font-size:1.5em', result);
+        })
+        }
+    }
+
+
   }
+
+
+
 
 </script>

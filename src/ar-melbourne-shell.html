@@ -166,23 +166,23 @@
                 // replace this with production cloudant url
                 // db will only have the index of lat,lon, title, details_id, url
                 var db = new PouchDB('geolocations');
-                db.replicate.from('http://localhost:15984/geolocations', {
-                  live: true,
-                  retry: true,
-                  filter: '_view',
-                  view: '_views/coordinates_view',
-                  fields: ['lat', 'lon', '_id']
-                }).on('change', (info) => console.log(info))
-                .on('paused', (err) => console.log(err))
-                .on('active', () => { })
-                .on('denied', (err) => console.log(err))
-                .on('complete', (info) => console.log(info))
-                .on('error', (err) => console.log(err));
-                db.createIndex({
-                  index: {
-                    fields: ["lat", "lon"]
-                  }
-                });
+//                db.replicate.from('http://localhost:15984/geolocations', {
+//                  live: true,
+//                  retry: true,
+//                  filter: '_view',
+//                  view: '_views/coordinates_view',
+//                  fields: ['lat', 'lon', '_id']
+//                }).on('change', (info) => console.log(info))
+//                .on('paused', (err) => console.log(err))
+//                .on('active', () => { })
+//                .on('denied', (err) => console.log(err))
+//                .on('complete', (info) => console.log(info))
+//                .on('error', (err) => console.log(err));
+//                db.createIndex({
+//                  index: {
+//                    fields: ["lat", "lon"]
+//                  }
+//                });
                 // to query for nearby qr codes, sadly geopouch is not available
                 // in browserified form.
                 // instead
