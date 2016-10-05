@@ -14,9 +14,20 @@
             var timeToCrop = postCropTime - preCropTime;
             console.log("crop time = " + timeToCrop + "ms");
             console.log(typeof image);
-
+            qrdata = image.bitmap.data;
+            qrheight = image.bitmap.height;
+            qrwidth = image.bitmap.width;
+            qrimg = new ImageData(
+              new Uint8ClampedArray(qrdata, qrwidth, qrheight))
+            qr = new QrCode();
+            qr.callback = function(resp, err) {
+              console.log(resp);
+              console.log(err);
+              console.log("it worked!")
+              deferred.fulfill("Hello");
+            }
             image.getBase64(Jimp.MIME_PNG, function(err, src) {
-              deferred.fulfill(src);
+              qr.decode(src);
             });
 
 

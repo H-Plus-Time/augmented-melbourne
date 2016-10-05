@@ -243,10 +243,11 @@
                 var preProcTime = d.getTime();
 
                   Odin.processImage(frame, subImageBounds).then(function(dataURL) {
-                  this.$.ar1.src = dataURL;
+                    console.log(dataURL);
+                  // this.$.ar1.src = dataURL;
                   // qrcode.callback = handleQRScanResponse;
-                  qr.callback = handleQRScanResponse.bind(this);
-                  qr.decode(dataURL);
+                  // qr.callback = handleQRScanResponse.bind(this);
+                  // qr.decode(dataURL);
                   // qrcode.decode(dataURL);
 
                 }.bind(this))
