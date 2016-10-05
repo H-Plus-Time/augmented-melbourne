@@ -18,7 +18,7 @@
             qrheight = image.bitmap.height;
             qrwidth = image.bitmap.width;
             qrimg = new ImageData(
-              new Uint8ClampedArray(qrdata, qrwidth, qrheight))
+              new Uint8ClampedArray(qrdata), qrwidth, qrheight)
             qr = new QrCode();
             qr.callback = function(resp, err) {
               console.log(resp);
