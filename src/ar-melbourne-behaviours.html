@@ -23,12 +23,13 @@
             qr.callback = function(resp, err) {
               console.log(resp);
               console.log(err);
-              console.log("it worked!")
-              deferred.fulfill("Hello");
+              console.log("it worked!");
+              deferred.fulfill(resp);
             }
-            image.getBase64(Jimp.MIME_PNG, function(err, src) {
-              qr.decode(src);
-            });
+            qr.decode({data: qrimg, height:qrheight, width: qrwidth});
+            // image.getBase64(Jimp.MIME_PNG, function(err, src) {
+            //   qr.decode(src);
+            // });
 
 
         })
