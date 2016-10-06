@@ -1,63 +1,55 @@
-<dom-module id="augmented-melbourne-description-pages">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="augmented-melbourneDescriptionPage">
   <template>
     <style>
-    :host {
-      /*display:inline-block;*/
-       background-image: url(/images/augmentedMelbourneQRlogo.jpg);
-       display: flex;
-       position:relative;
-    }
-    .landingPageContainer{
-      font-family: Arial !important;
-      @apply(--layout-vertical);
-      @apply(--layout-center);
-      margin: 10% 0% 10% 0%;
-      padding: 50px 20px 50px 20px;
-              /*padding: 20% 20% 20% 20%;*/
+      :host {
+      background-image: url(/images/augmentedMelbourneQRlogo.jpg);
+      display: flex;
+      position:relative;
+   }
 
-       font-family: Arial !important;
-       background-color:rgba(230,230,230,0.95);
+   .descriptionContainer{
+     font-family: Arial !important;
+     @apply(--layout-vertical);
+     @apply(--layout-center);
+      margin: 0% 0% 0% 0%;
+      padding: 20px 20px 20px 20px;
+      background-color:rgba(230,230,230,0.95);
+      width: 100%;
 
-    }
-    paper-button{
-    background-color: black;
-   color: white;
-}
-h1{
-  font-size: 4em;
-  font-weight: bold;
-text-align: center;
-}
-.buttonsContainer{
-  display: flex;
-  text-align: center;
-}
-        paper-button{flex-grow: 1;
-        }
-        .landingPageContent{width: 80%;}
-  </style>
-  <div class="flex">
-  <div class="landingPageContainer">
-        <div class="landingPageContent">
-  <h1>Augmented Melbourne</h1>
-  <p>
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-  </p>
-  <div class="buttonsContainer">
-    <paper-button toggles raised class="findQRButton">Click to find QR code</paper-button>
-    <paper-button toggles raised class="aboutButton">About</paper-button>
 
+   }
+   .descriptionContent{
+     width:80%;
+
+
+   }
+
+   .descriptionPhoto{
+     height: auto;
+     width: 100%;
+
+
+   }
+    </style>
+
+
+        <div class="descriptionContainer">
+              <div class="descriptionContent">
+<p>This is the place you are at:</p>
+<h2>test</h2>
+<img class="descriptionPhoto" src="/images/team.jpg" alt="">
+<p> Longatude</p>
+<p>Latitude</P>
+<p>Descriptions</P>
+</div>
   </div>
 
-</div>
-</div>
-</div>
-
-
-</template>
+  </template>
   <script>
     Polymer({
-      is: 'augmented-melbourne-description-pages'
+      is: 'augmented-melbourneDescriptionPage'
     });
   </script>
 </dom-module>
