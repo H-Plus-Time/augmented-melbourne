@@ -137,6 +137,7 @@
               // window.webkitRequestFileSystem(window.PERSISTENT, 1024*1024, onInitFs, errorHandler);
           },
           onSuccess: function(arScene, arController, arCamera) {
+              console.log("webcam res = " + arController.videoWidth);
               document.body.className = arController.orientation;
               console.log(this);
               qr = new QrCode();
@@ -225,20 +226,35 @@
               // the business end
               arController.addEventListener('getMarker', _.debounce(function(e) {
                 // This fires far too often, do not notify the user
-                // console.log('found marker', e);
+                console.log('found marker', e);
                 // console.log(e.data.marker);
+
+
+                //get bounds of marker from JSAR
                 var subImageBounds = computeBounds(e.data.marker.vertex);
+                //Scale bounds to match difference between camera res and brower size
+                subImageBounds = Odin.scaleBounds(subImageBounds, arController, renderer);
+
                 var pos = convertPosition(e.data.marker);
-                // console.log(subImageBounds);
+                console.log(subImageBounds);
                 var frame = renderer.domElement.toDataURL();
                 // process image, output to #ar1 image tag.
-                Odin.processImage(frame, pos).then(function(dataURL) {
-                  this.$.ar1.src = dataURL;
+                var d = new Date();
+                var preProcTime = d.getTime();
+
+                  Odin.processImage(frame, subImageBounds).then(function(dataURL) {
+                    console.log(dataURL);
+                  // this.$.ar1.src = dataURL;
                   // qrcode.callback = handleQRScanResponse;
-                  qr.callback = handleQRScanResponse.bind(this);
-                  qr.decode(dataURL);
+                  // qr.callback = handleQRScanResponse.bind(this);
+                  // qr.decode(dataURL);
                   // qrcode.decode(dataURL);
+
                 }.bind(this))
+                  d2 = new Date();
+                 var postProcTime = d2.getTime();
+                  var procTime = postProcTime -  preProcTime;
+                  console.log("Proc time = " + procTime + "ms");
                 this.$.ar2.src = frame;
 
               }.bind(this), 30))
@@ -264,8 +280,11 @@
                   this.renderer.setSize(window.innerWidth, window.innerWidth * 0.75)
                 }
               }.bind(this), 500);
-              window.addEventListener('resize', canvasResize, false);
+//              window.addEventListener('resize', canvasResize, false);
           }
+
       });
+
+
     </script>
 </dom-module>

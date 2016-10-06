@@ -25,6 +25,7 @@
 <link rel="import" href="augmentedMelbourneFooter.html" />
 <script src="../bower_components/pouchdb/dist/pouchdb.min.js"></script>
 <script src="../bower_components/pouchdb-find/dist/pouchdb.find.min.js"></script>
+<script src="../js/geopouch.js"></script>
 <dom-module id="ar-melbourne">
     <template>
         <style is="custom-style" include="ar-component-shared-styles iron-flex iron-flex-alignment">
@@ -165,36 +166,34 @@
                 this.fire('iron-announce', {details: 'hello world'}, {bubbles: true});
                 // replace this with production cloudant url
                 // db will only have the index of lat,lon, title, details_id, url
-                var db = new PouchDB('geolocations');
-                db.replicate.from('http://localhost:15984/geolocations', {
+                PouchDB.plugin(geopouch);
+                this.db = new PouchDB('geolocations');
+                var read_user = 'ceetsessequinglengethast';
+                var read_key = '183e738e6303cc253966405c0128c3835604a09d';
+                console.log(`https://${read_user}:${read_key}@nroberts42.cloudant.com/qr-db`);
+                this.db.replicate.from(
+                  `https://${read_user}:${read_key}@nroberts42.cloudant.com/qr-db`, {
                   live: true,
                   retry: true,
                   filter: '_view',
                   view: '_views/coordinates_view',
-                  fields: ['lat', 'lon', '_id']
+                  fields: ['type', '_id']
                 }).on('change', (info) => console.log(info))
                 .on('paused', (err) => console.log(err))
                 .on('active', () => { })
                 .on('denied', (err) => console.log(err))
                 .on('complete', (info) => console.log(info))
                 .on('error', (err) => console.log(err));
-                db.creatIndex({
+                this.db.createIndex({
                   index: {
-                    fields: ["lat", "lon"]
+                    fields: ["geometry.coordinates"]
                   }
                 });
-                // to query for nearby qr codes, sadly geopouch is not available
-                // in browserified form.
-                // instead
-                // to fetch extra details pertinent to a qr code:
-                // remoteDb = PouchDB('http://localhost:15984/geolocations');
-                // db.find({selector: {lat: {$exists: true}}, limit: 1}).then((resp) => {
-                // return resp.docs[0];
-                // })
-                // .then((qr_doc) => {
-                //   return remoteDB.find({selector: {_id: qr_doc.details_id}})
-                // })
-                // .then( (resp) => console.log(resp.docs[0]) )
+                //example usage only
+                db.spatial([0,0,90,90], {include_docs: true}).then( resp => {
+                  console.log("All the points between [0,0] and [90, 90]")
+                  console.log(resp);
+                })
             }
         })
     </script>

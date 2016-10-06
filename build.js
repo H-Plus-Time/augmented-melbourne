@@ -13,3 +13,7 @@ fs.copy('node_modules/qrcode-reader/dist/browser.js', 'js/qr.js', function (err)
   if (err) return console.error(err)
   console.log("success!")
 });
+fs.copy('node_modules/geopouch/dist/geopouch.js', 'js/geopouch.js', function(err) {
+  if(err) return console.error(err)
+  console.log("success!")
+})
