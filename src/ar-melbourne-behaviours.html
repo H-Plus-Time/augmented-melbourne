@@ -13,23 +13,24 @@
             var postCropTime = d2.getTime();
             var timeToCrop = postCropTime - preCropTime;
             console.log("crop time = " + timeToCrop + "ms");
-            console.log(typeof image);
-            qrdata = image.bitmap.data;
-            qrheight = image.bitmap.height;
-            qrwidth = image.bitmap.width;
-            qrimg = new ImageData(
-              new Uint8ClampedArray(qrdata), qrwidth, qrheight)
-            qr = new QrCode();
-            qr.callback = function(resp, err) {
-              console.log(resp);
-              console.log(err);
-              console.log("it worked!");
-              deferred.fulfill(resp);
-            }
-            qr.decode({data: qrimg, height:qrheight, width: qrwidth});
-            // image.getBase64(Jimp.MIME_PNG, function(err, src) {
-            //   qr.decode(src);
-            // });
+            // console.log(typeof image);
+            // qrdata = image.bitmap.data;
+            // qrheight = image.bitmap.height;
+            // qrwidth = image.bitmap.width;
+            // qrimg = new ImageData(
+            //   new Uint8ClampedArray(qrdata), qrwidth, qrheight)
+            // qr = new QrCode();
+            // qr.callback = function(resp, err) {
+            //   if(!err) {
+            //     console.log('%c %s', 'color:red;font-size:1.5em', resp);
+            //     deferred.fulfill(resp);
+            //   }
+            //   deferred.fulfill(err);
+            // }
+            // qr.decode(qrimg)
+            image.getBase64(Jimp.MIME_PNG, function(err, src) {
+              deferred.fulfill(src);
+            });
 
 
         })

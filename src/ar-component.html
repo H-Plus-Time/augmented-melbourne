@@ -226,7 +226,7 @@
               // the business end
               arController.addEventListener('getMarker', _.debounce(function(e) {
                 // This fires far too often, do not notify the user
-                console.log('found marker', e);
+                // console.log('found marker', e);
                 // console.log(e.data.marker);
 
 
@@ -236,19 +236,17 @@
                 subImageBounds = Odin.scaleBounds(subImageBounds, arController, renderer);
 
                 var pos = convertPosition(e.data.marker);
-                console.log(subImageBounds);
+                // console.log(subImageBounds);
                 var frame = renderer.domElement.toDataURL();
                 // process image, output to #ar1 image tag.
                 var d = new Date();
                 var preProcTime = d.getTime();
 
                   Odin.processImage(frame, subImageBounds).then(function(dataURL) {
-                    console.log(dataURL);
-                  // this.$.ar1.src = dataURL;
-                  // qrcode.callback = handleQRScanResponse;
-                  // qr.callback = handleQRScanResponse.bind(this);
-                  // qr.decode(dataURL);
-                  // qrcode.decode(dataURL);
+                    // console.log(dataURL);
+                  this.$.ar1.src = dataURL;
+                  qr.callback = handleQRScanResponse.bind(this);
+                  qr.decode(dataURL);
 
                 }.bind(this))
                   d2 = new Date();
@@ -257,7 +255,7 @@
                   console.log("Proc time = " + procTime + "ms");
                 this.$.ar2.src = frame;
 
-              }.bind(this), 30))
+              }.bind(this), 100))
 
               // this.dumpScene(renderer);
               var tick = function() {
@@ -270,7 +268,7 @@
               tick();
           },
           attached: function() {
-              x = ARController.getUserMediaThreeScene({cameraParam: 'bower_components/jsartoolkit5/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)});
+              x = ARController.getUserMediaThreeScene({facing: 'user', cameraParam: 'bower_components/jsartoolkit5/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)});
 
               canvasResize = _.debounce(function(e) {
                 if(window.innerHeight < window.innerWidth * 0.75) {

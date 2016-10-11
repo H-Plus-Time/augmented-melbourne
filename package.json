@@ -8,8 +8,10 @@
     "clean": "rm -r bower_components && rm -r node_modules",
     "bower": "bower install",
     "browser-sync": "browser-sync start --server --files 'src/*.html' --reload-delay=300 --reload-debounce=500",
+    "browser-sync-nonlocal": "browser-sync start --server --https --files 'src/*.html' --reload-delay=300 --reload-debounce=500",
     "deploy": "bower install",
-    "dev": "npm run copy && npm run browser-sync"
+    "dev": "npm run copy && npm run browser-sync",
+    "android-dev": "npm run copy && npm run browser-sync-nonlocal"
   },
   "repository": {
     "type": "git",
