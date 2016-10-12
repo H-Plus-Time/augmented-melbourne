@@ -35,21 +35,27 @@
     </style>
 
 
-        <div class="descriptionContainer">
-              <div class="descriptionContent">
-<p>This is the place you are at:</p>
-<h2>test</h2>
-<img class="descriptionPhoto" src="/images/team.jpg" alt="">
-<p> Longatude</p>
-<p>Latitude</P>
-<p>Descriptions</P>
-</div>
+<div class="descriptionContainer">
+  <div class="descriptionContent">
+    <h2>{{data.name}}</h2>
+    <img class="descriptionPhoto" src="[[data.img]]" alt="[[data.name]]">
+    <p>[[data.lon]]</p>
+    <p>[[data.lat]]</P>
+    <p>[[data.description]]</P>
   </div>
+</div>
+<paper-button>Back to map</paper-button>
 
   </template>
   <script>
     Polymer({
-      is: 'augmented-melbourneDescriptionPage'
+      is: 'augmented-melbourneDescriptionPage',
+      properties: {
+        data: {
+          type: Object,
+          notify: true
+        }
+      }
     });
   </script>
 </dom-module>
