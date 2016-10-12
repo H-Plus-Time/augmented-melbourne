@@ -8,7 +8,14 @@
             // do stuff with the image (if no exception)
             var d = new Date();
             var preCropTime = d.getTime();
-      //      image.crop(subImageBounds.x_min, subImageBounds.y_min, subImageBounds.width, subImageBounds.height);
+
+            cropX = subImageBounds.x_min + subImageBounds.width / 6;//starting one sixth of the way into picture
+            cropY = subImageBounds.y_min + subImageBounds.height / 6;
+            cropWidth = subImageBounds.width * (2/3);//two thirds of image width
+            cropHeight = subImageBounds.height * (2/3);
+
+            image.crop(cropX, cropY, cropWidth, cropHeight);
+//            image.crop(subImageBounds.x_min, subImageBounds.y_min, subImageBounds.width, subImageBounds.height);
             var d2 = new Date();
             var postCropTime = d2.getTime();
             var timeToCrop = postCropTime - preCropTime;

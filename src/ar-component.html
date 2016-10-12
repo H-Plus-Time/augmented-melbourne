@@ -157,14 +157,14 @@
                       document.body.className += ' desktop';
                   }
               }
-              renderer.domElement.style.display = "flex";
-              renderer.domElement.style.margin = "auto";
-              if(window.innerHeight < window.innerWidth * 0.75) {
-                var adjustedHeight = window.innerHeight - 64;
-                renderer.setSize(adjustedHeight * 1.33, adjustedHeight)
-              } else {
-                renderer.setSize(window.innerWidth, window.innerWidth * 0.75)
-              }
+//              renderer.domElement.style.display = "flex";
+//              renderer.domElement.style.margin = "auto";
+//              if(window.innerHeight < window.innerWidth * 0.75) {
+//                var adjustedHeight = window.innerHeight - 64;
+//                renderer.setSize(adjustedHeight * 1.33, adjustedHeight)
+//              } else {
+//                renderer.setSize(window.innerWidth, window.innerWidth * 0.75)
+//              }
               this.renderer = renderer;
               this.$$('.display').appendChild(renderer.domElement);
               var rotationV = 0;
@@ -175,7 +175,10 @@
                   rotationTarget += 1;
               }, false);
 
-              arController.loadMarker('data/marker16.pat', function(markerId) {
+              console.log("LOD THE MARKER");
+              arController.loadMarker('data/marker64.pat', function(markerId) {
+                  console.log("marker loaded" + arController.markerRoot);
+                  console.log("marker?");
                   var markerRoot = arController.createThreeMarker(markerId);
                   console.log(markerRoot);
                   arScene.scene.add(markerRoot);
@@ -198,7 +201,8 @@
                 return {x: marker.pos[0], y: marker.pos[1]}
               }
               function handleQRScanResponse(result, err) {
-                if(result) {
+                console.log("in qr response error is:" + err)
+                  if(result) {
                   fetch(result)
                   .then( (resp) => {
                     console.log(resp)
@@ -224,9 +228,9 @@
               }
 
               // the business end
-              arController.addEventListener('getMarker', _.debounce(function(e) {
+              arController.addEventListener('getMarker', function(e) {
                 // This fires far too often, do not notify the user
-                // console.log('found marker', e);
+                 console.log('found marker', e);
                 // console.log(e.data.marker);
 
 
@@ -236,14 +240,14 @@
                 subImageBounds = Odin.scaleBounds(subImageBounds, arController, renderer);
 
                 var pos = convertPosition(e.data.marker);
-                // console.log(subImageBounds);
+                  console.log(subImageBounds);
                 var frame = renderer.domElement.toDataURL();
                 // process image, output to #ar1 image tag.
                 var d = new Date();
                 var preProcTime = d.getTime();
 
                   Odin.processImage(frame, subImageBounds).then(function(dataURL) {
-                    // console.log(dataURL);
+                     console.log(dataURL.length);
                   this.$.ar1.src = dataURL;
                   qr.callback = handleQRScanResponse.bind(this);
                   qr.decode(dataURL);
@@ -252,10 +256,10 @@
                   d2 = new Date();
                  var postProcTime = d2.getTime();
                   var procTime = postProcTime -  preProcTime;
-                  console.log("Proc time = " + procTime + "ms");
+                  //console.log("Proc time = " + procTime + "ms");
                 this.$.ar2.src = frame;
 
-              }.bind(this), 100))
+              }.bind(this))
 
               // this.dumpScene(renderer);
               var tick = function() {
@@ -268,7 +272,7 @@
               tick();
           },
           attached: function() {
-              x = ARController.getUserMediaThreeScene({facing: 'user', cameraParam: 'bower_components/jsartoolkit5/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)});
+              x = ARController.getUserMediaThreeScene({facing: 'environment', width: {min: 1280, max: 1280}, height: {min: 720, max: 720}, facingMode: 'environment', cameraParam: 'bower_components/jsartoolkit5/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)});
 
               canvasResize = _.debounce(function(e) {
                 if(window.innerHeight < window.innerWidth * 0.75) {
