@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link async rel="import" href="../bower_components/google-map/google-map.html" />
+<link async rel="import" href="../bower_components/google-map/google-map-marker.html" />
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <dom-module id="ar-maps-view">
   <template>
@@ -16,9 +17,19 @@
     <!-- <paper-input label="Search...">Stuff</paper-input> -->
     <google-map map="{{map}}" latitude="37.779"
               longitude="-122.3892">
-      <google-map-marker lat="{{currentLat}}" long="{{currentLong}}">
-        <iron-icon icon="maps:my-location"></iron-icon>
+      <google-map-marker latitude="37.779" longitude="-122.3892"
+        icon="http://rottenwifi.com/bundles/itowififront/images/my-location-icon.png">
       </google-map-marker>
+      <template is="dom-repeat" items="[[qrcodes]]">
+        <google-map-marker latitude="[[item.lat]]" longitude="[[item.lon]]"
+          title="[[item.title]]" click-events>
+          <h3>[[item.title]]</h3>
+          <a href="/#/description/#/id=[[item.id]]">
+            <paper-button>Details</paper-button>
+          </a>
+
+        </google-map-marker>
+      </template>
     </google-map>
   </template>
   <script>
@@ -34,10 +45,23 @@
         radius: {
           type: Number,
           value: function() { return 500 }
+        },
+        qrcodes: {
+          type: Array,
+          value: function() {
+            return [
+              {id: 2, title: 'helloooo', lat: '37.770', lon: '-122.3892'}
+            ]
+          }
         }
       },
+      descriptionEvent: function() {
+        console.log("tes");
+      },
       attached: function() {
+        navigator.geolocation.getCurrentPosition(function() {
 
+        });
       },
       geoSearchQR: function() {
         // get current lat, long
