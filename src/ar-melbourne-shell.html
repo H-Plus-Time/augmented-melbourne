@@ -130,6 +130,20 @@
                     computed: 'computeActiveMode(routeData.view)'
                 }
             },
+            listeners: {
+              'qr-marker-found': 'handleMarkerUrl'
+            },
+            handleMarkerUrl: function(url) {
+              // look up db
+              
+              //if not present in local, query remote
+              this.$$('paper-toast').show(
+                {text: "Marker found,you are at " + resp.title + ", " + resp.address,
+                interval: 3
+              });
+              //do nothing if not present in either
+
+            },
             computeActiveMode: function(view) {
               if(['active', 'navigation'].indexOf(view) != -1) {
                 return true;
@@ -192,7 +206,7 @@
                   }
                 });
                 //example usage only
-                db.spatial([0,0,90,90], {include_docs: true}).then( resp => {
+                this.db.spatial([0,0,90,90], {include_docs: true}).then( resp => {
                   console.log("All the points between [0,0] and [90, 90]")
                   console.log(resp);
                 })
