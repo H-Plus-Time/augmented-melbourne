@@ -30,6 +30,7 @@
     "geopouch": "^2.0.3",
     "jimp": "^0.2.27",
     "qrcode-reader": "^0.2.1",
-    "three": "*"
+    "three": "*",
+    "worker-pouch": "^1.1.1"
   }
 }

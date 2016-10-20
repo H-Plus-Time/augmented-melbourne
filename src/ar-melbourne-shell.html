@@ -26,6 +26,7 @@
 <link rel="import" href="augmentedMelbourneFooter.html" />
 <script src="../bower_components/pouchdb/dist/pouchdb.min.js"></script>
 <script src="../bower_components/pouchdb-find/dist/pouchdb.find.min.js"></script>
+<script src="../js/worker-pouch.js"></script>
 <script src="../js/geopouch.js"></script>
 <dom-module id="ar-melbourne">
     <template>
@@ -208,7 +209,7 @@
                 // replace this with production cloudant url
                 // db will only have the index of lat,lon, title, details_id, url
                 PouchDB.plugin(geopouch);
-                this.db = new PouchDB('geolocations');
+                this.db = new PouchDB('geolocations', {adapter: 'worker'});
                 this.read_user = 'ceetsessequinglengethast';
                 this.read_key = '183e738e6303cc253966405c0128c3835604a09d';
                 console.log(`https://${this.read_user}:${this.read_key}@nroberts42.cloudant.com/qr-db`);
@@ -227,7 +228,7 @@
                 .on('error', (err) => console.log(err));
                 this.db.createIndex({
                   index: {
-                    fields: ["geometry.coordinates"]
+                    fields: ["url"]
                   }
                 });
                 //example usage only
