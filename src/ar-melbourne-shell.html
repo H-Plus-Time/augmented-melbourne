@@ -133,10 +133,10 @@
             listeners: {
               'qr-marker-found': 'handleMarkerUrl'
             },
-            handleMarkerUrl: function(url) {
+            handleMarkerUrl: function(event) {
               // look up db
               console.log("Entering handleMarkerUrl")
-              console.log(url);
+              url = event.detail;
               this.db.find({
                 selector: {url: url},
                 limit: 1
