@@ -202,18 +202,10 @@
               }
               function handleQRScanResponse(result, err) {
                 console.log("in qr response error is:" + err)
-                  if(result) {
-                  fetch(result)
-                  .then( (resp) => {
-                    console.log(resp)
-                    var urlParts = resp.url.split("/");
-                    var location = urlParts[urlParts.length - 1].split(",");
-                    var latitude = location[0];
-                    var longitude = location[1];
-                    console.log("%c Latitude: %s\nLongitude: %s\n", 'color:red;font-size:1.5em', latitude, longitude);
-                    this.fire('iron-announce', {text: result}, {bubbles: true});
-                    console.log('%c %s', 'color:red;font-size:1.5em', result);
-                  })
+                // fetch from pouchdb
+                if(result) {
+                    this.dispatchEvent(new CustomEvent('qr-marker-found', {detail: result, bubbles: true}))
+                }
 
                   /*
                   0. If in cache, skip to 4.
@@ -224,7 +216,6 @@
                   5. Announce title, short description, elevation, etc.
                   */
 
-                }
               }
 
               // the business end
@@ -272,8 +263,7 @@
               tick();
           },
           attached: function() {
-              x = ARController.getUserMediaThreeScene({facing: 'environment', width: {min: 1280, max: 1280}, height: {min: 720, max: 720}, facingMode: 'environment', cameraParam: 'bower_components/jsartoolkit5/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)});
-
+              ARController.getUserMediaThreeScene({facing: 'environment', width: {min: 1280, max: 1280}, height: {min: 720, max: 720}, facingMode: 'environment', cameraParam: 'bower_components/jsartoolkit5/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', onSuccess: this.onSuccess.bind(this)})
               canvasResize = _.debounce(function(e) {
                 if(window.innerHeight < window.innerWidth * 0.75) {
                   var adjustedHeight = window.innerHeight - 64;
@@ -282,7 +272,7 @@
                   this.renderer.setSize(window.innerWidth, window.innerWidth * 0.75)
                 }
               }.bind(this), 500);
-             window.addEventListener('resize', canvasResize, false);
+//              window.addEventListener('resize', canvasResize, false);
           }
 
       });

@@ -20,8 +20,8 @@
 <link rel="import" href="ar-component-shared-styles.html">
 <link rel="import" href="augmentedMelbourneLandingPage.html">
 <link rel="import" href="augmentedMelbourneAboutPage.html">
-<link rel="import" href="augmentedMelbourneDescriptionPages.html">
 <link rel="import" href="paperToastNotification.html">
+<link rel="import" href="augmentedMelbourneDescriptionPages.html">
 <link rel="import" href="ar-maps-view.html" />
 <link rel="import" href="augmentedMelbourneFooter.html" />
 <script src="../bower_components/pouchdb/dist/pouchdb.min.js"></script>
@@ -130,6 +130,42 @@
                     computed: 'computeActiveMode(routeData.view)'
                 }
             },
+            listeners: {
+              'qr-marker-found': 'erUrl'
+            },
+            handleMarkerUrl: function(url) {
+              // look up db
+              this.db.find({
+                selector: {url: url},
+                limit: 1
+              }).then((resp) => {
+                console.log(resp);
+                if(resp.docs.length == 0) {
+                  var remoteDB = new PouchDB("https://${this.read_user}:${this.read_key}@nroberts42.cloudant.com/qr-db");
+                  console.log("No docs found locally, trying remote")
+                  return remoteDB.find({
+                    selector: {url: url},
+                    limit: 1
+                  }).then((resp) => {return resp.docs })
+                } else {
+                  return resp.docs
+                }
+              })
+              .then(function(docs) {
+                var message;
+                console.log(docs);
+                if(docs.length == 0) {
+                  message = `This is a QR Code, contained by one of our markers\
+                  , but it does not appear to be in our database`;
+                } else {
+                  message = `Marker found, you are at ${docs[0].title}, \
+                  ${docs[0].address}. Accessibility description: \
+                  ${docs[0].accessibilityDescription}`
+                }
+                this.$$('paper-toast').show({text: message, duration: 5000})
+              }.bind(this))
+
+            },
             computeActiveMode: function(view) {
               if(['active', 'navigation'].indexOf(view) != -1) {
                 return true;
@@ -144,6 +180,7 @@
                 }
               });
             },
+  //db stuff do here:
 
             attached: function() {
                 this.menuItems = [{
@@ -170,11 +207,11 @@
                 // db will only have the index of lat,lon, title, details_id, url
                 PouchDB.plugin(geopouch);
                 this.db = new PouchDB('geolocations');
-                var read_user = 'ceetsessequinglengethast';
-                var read_key = '183e738e6303cc253966405c0128c3835604a09d';
-                console.log(`https://${read_user}:${read_key}@nroberts42.cloudant.com/qr-db`);
+                this.read_user = 'ceetsessequinglengethast';
+                this.read_key = '183e738e6303cc253966405c0128c3835604a09d';
+                console.log(`https://${this.read_user}:${this.read_key}@nroberts42.cloudant.com/qr-db`);
                 this.db.replicate.from(
-                  `https://${read_user}:${read_key}@nroberts42.cloudant.com/qr-db`, {
+                  `https://${this.read_user}:${this.read_key}@nroberts42.cloudant.com/qr-db`, {
                   live: true,
                   retry: true,
                   filter: '_view',
@@ -192,7 +229,7 @@
                   }
                 });
                 //example usage only
-                db.spatial([0,0,90,90], {include_docs: true}).then( resp => {
+                this.db.spatial([0,0,90,90], {include_docs: true}).then( resp => {
                   console.log("All the points between [0,0] and [90, 90]")
                   console.log(resp);
                 })

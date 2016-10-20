@@ -38,6 +38,7 @@
     "platinum-push-messaging": "^1.0.5",
     "app-pouchdb": "PolymerElements/app-pouchdb#^0.9.2",
     "pouchdb": "^6.0.5",
-    "bluebird": "^3.4.6"
+    "bluebird": "^3.4.6",
+    "await": "*"
   }
 }

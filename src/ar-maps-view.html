@@ -22,10 +22,13 @@
       </google-map-marker>
       <template is="dom-repeat" items="[[qrcodes]]">
         <google-map-marker latitude="[[item.lat]]" longitude="[[item.lon]]"
-          title="[[item.title]]" click-events>
+          title="[[item.title]]" address="[[item.addr]]" click-events>
           <h3>[[item.title]]</h3>
+          <p>Latitude: [[item.lat]]</p>
+          <p>Longitude: [[item.lon]]</p>
+          <p> Address: [[item.addr]]</p>
           <a href="/#/description/#/id=[[item.id]]">
-            <paper-button>Details</paper-button>
+            <paper-button alt="Click for details about this destination">Details</paper-button>
           </a>
 
         </google-map-marker>
@@ -50,7 +53,7 @@
           type: Array,
           value: function() {
             return [
-              {id: 2, title: 'helloooo', lat: '37.770', lon: '-122.3892'}
+              {id: 2, title: 'hellooo', lat: '37.770', lon: '-122.3892', addr: '332 John Street, St Albans 3021'}
             ]
           }
         }
@@ -79,7 +82,8 @@
         window.geofence.addOrUpdate({
             id:             "examplegeofenceid", //A unique identifier of geofence
             latitude:       this.destination.lat, //Geo latitude of geofence
-            longitude:      this.destination.long, //Geo longitude of geofence
+            longitude:      this.destination.long, //Geo longitude of geofenceS
+            address:        this.destination.addr, //Geo Address of geofence
             radius:         30, //Radius of geofence in meters
             transitionType: 1, //Type of transition 1 - Enter, 2 - Exit, 3 - Both
             notification: {         //Notification object
