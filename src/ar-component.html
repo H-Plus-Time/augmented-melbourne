@@ -176,7 +176,7 @@
               }, false);
 
               console.log("LOD THE MARKER");
-              arController.loadMarker('data/marker64.pat', function(markerId) {
+              arController.loadMarker('data/v4marker8asa16.pat', function(markerId) {
                   console.log("marker loaded" + arController.markerRoot);
                   console.log("marker?");
                   var markerRoot = arController.createThreeMarker(markerId);
@@ -204,6 +204,7 @@
                 console.log("in qr response error is:" + err)
                 // fetch from pouchdb
                 if(result) {
+                    console.log(result);
                     this.dispatchEvent(new CustomEvent('qr-marker-found', {detail: result, bubbles: true}))
                 }
 

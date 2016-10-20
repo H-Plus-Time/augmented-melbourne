@@ -135,6 +135,8 @@
             },
             handleMarkerUrl: function(url) {
               // look up db
+              console.log("Entering handleMarkerUrl")
+              console.log(url);
               this.db.find({
                 selector: {url: url},
                 limit: 1
