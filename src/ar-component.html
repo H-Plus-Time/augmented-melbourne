@@ -203,9 +203,9 @@
               function handleQRScanResponse(result, err) {
                 console.log("in qr response error is:" + err)
                 // fetch from pouchdb
-                // if(result) {
-                //     this.dispatchEvent(new CustomEvent('qr-marker-found', {detail: result, bubbles: true}))
-                // }
+                if(result) {
+                    this.dispatchEvent(new CustomEvent('qr-marker-found', {detail: result, bubbles: true}))
+                }
 
                   /*
                   0. If in cache, skip to 4.
