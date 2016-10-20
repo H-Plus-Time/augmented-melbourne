@@ -9,10 +9,21 @@
             var d = new Date();
             var preCropTime = d.getTime();
 
-            cropX = subImageBounds.x_min + subImageBounds.width / 6;//starting one sixth of the way into picture
-            cropY = subImageBounds.y_min + subImageBounds.height / 6;
-            cropWidth = subImageBounds.width * (2/3);//two thirds of image width
-            cropHeight = subImageBounds.height * (2/3);
+            //use this for old marker with a q
+//            cropX = subImageBounds.x_min + subImageBounds.width / 6;//starting one sixth of the way into picture
+//            cropY = subImageBounds.y_min + subImageBounds.height / 6;
+//            cropWidth = subImageBounds.width * (2/3);//two thirds of image width
+//            cropHeight = subImageBounds.height * (2/3);
+
+
+            //use this for new v4 markers
+            cropX = subImageBounds.x_min
+            cropY = subImageBounds.y_min
+            cropWidth = subImageBounds.width
+            cropHeight = subImageBounds.height
+
+
+
 
             image.crop(cropX, cropY, cropWidth, cropHeight);
 //            image.crop(subImageBounds.x_min, subImageBounds.y_min, subImageBounds.width, subImageBounds.height);
