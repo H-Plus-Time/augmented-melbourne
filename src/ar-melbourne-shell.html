@@ -138,35 +138,36 @@
               // look up db
               console.log("Entering handleMarkerUrl")
               url = event.detail;
-              this.db.find({
-                selector: {url: url},
-                limit: 1
-              }).then((resp) => {
-                console.log(resp);
-                if(resp.docs.length == 0) {
-                  var remoteDB = new PouchDB("https://${this.read_user}:${this.read_key}@nroberts42.cloudant.com/qr-db");
-                  console.log("No docs found locally, trying remote")
-                  return remoteDB.find({
-                    selector: {url: url},
-                    limit: 1
-                  }).then((resp) => {return resp.docs })
-                } else {
-                  return resp.docs
-                }
-              })
-              .then(function(docs) {
-                var message;
-                console.log(docs);
-                if(docs.length == 0) {
-                  message = `This is a QR Code, contained by one of our markers\
-                  , but it does not appear to be in our database`;
-                } else {
-                  message = `Marker found, you are at ${docs[0].title}, \
-                  ${docs[0].address}. Accessibility description: \
-                  ${docs[0].accessibilityDescription}`
-                }
-                this.$$('paper-toast').show({text: message, duration: 5000})
-              }.bind(this))
+              this.$$('paper-toast').show({text: "Hello world", duration: 5000})
+              // this.db.find({
+              //   selector: {url: url},
+              //   limit: 1
+              // }).then((resp) => {
+              //   console.log(resp);
+              //   if(resp.docs.length == 0) {
+              //     var remoteDB = new PouchDB("https://${this.read_user}:${this.read_key}@nroberts42.cloudant.com/qr-db", {adapter: 'worker'});
+              //     console.log("No docs found locally, trying remote")
+              //     return remoteDB.find({
+              //       selector: {url: url},
+              //       limit: 1
+              //     }).then((resp) => {return resp.docs })
+              //   } else {
+              //     return resp.docs
+              //   }
+              // })
+              // .then(function(docs) {
+              //   var message;
+              //   console.log(docs);
+              //   if(docs.length == 0) {
+              //     message = `This is a QR Code, contained by one of our markers\
+              //     , but it does not appear to be in our database`;
+              //   } else {
+              //     message = `Marker found, you are at ${docs[0].title}, \
+              //     ${docs[0].address}. Accessibility description: \
+              //     ${docs[0].accessibilityDescription}`
+              //   }
+              //   this.$$('paper-toast').show({text: message, duration: 5000})
+              // }.bind(this))
 
             },
             computeActiveMode: function(view) {
