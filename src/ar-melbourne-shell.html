@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
@@ -68,6 +69,12 @@
             pattern="/:view"
             data="{{routeData}}"
             tail="{{subroute}}"></app-route>
+        <iron-ajax
+        url="data/examples.json"
+        handle-as="json"
+        last-response="{{locations}}"
+        >
+        </iron-ajax>
         <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
         <app-drawer-layout fullbleed force-narrow>
             <app-drawer>
@@ -138,7 +145,14 @@
               // look up db
               console.log("Entering handleMarkerUrl")
               url = event.detail;
-              this.$$('paper-toast').show({text: "Hello world", duration: 5000})
+              location = this.locations[url];
+              if(location) {
+                  message = `Marker found, you are at ${location.title}, \
+                     ${location.address}. Accessibility description: \
+                     ${location.accessibilityDescription}`
+                  this.$$('paper-toast').show({text: message, duration: 5000})
+              }
+
               // this.db.find({
               //   selector: {url: url},
               //   limit: 1
