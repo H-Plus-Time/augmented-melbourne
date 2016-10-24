@@ -1,0 +1,4 @@
+http://maps.google.com/maps?q=-37.806586,144.963576 http://bit.ly/2e1ZSvQ RMIT Building 91 VXLab
+http://maps.google.com/maps?q=-37.807034,144.963015 http://bit.ly/2eI9StU Melbourne City Baths
+http://maps.google.com/maps?q=-37.808265,144.963026 http://bit.ly/2e20VM1 RMIT Building 80 Swanston Academic Building
+http://maps.google.com/maps?q=-37.810040,144.963923 http://bit.ly/2dBoVoq Melbourne Central Railway Station Swanston Street Entrance
