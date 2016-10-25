@@ -70,9 +70,10 @@
             data="{{routeData}}"
             tail="{{subroute}}"></app-route>
         <iron-ajax
-        url="data/examples.json"
+        url="../data/examples.json"
         handle-as="json"
         last-response="{{locations}}"
+        auto
         >
         </iron-ajax>
         <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
@@ -145,11 +146,11 @@
               // look up db
               console.log("Entering handleMarkerUrl")
               url = event.detail;
-              location = this.locations[url];
+              loc = this.locations[url];
               if(location) {
-                  message = `Marker found, you are at ${location.title}, \
-                     ${location.address}. Accessibility description: \
-                     ${location.accessibilityDescription}`
+                  message = `Marker found, you are at ${loc.title}, \
+                     ${loc.address}. Accessibility description: \
+                     ${loc.accessibilityDescription}`
                   this.$$('paper-toast').show({text: message, duration: 5000})
               }
 
