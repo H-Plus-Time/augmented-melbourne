@@ -19,12 +19,12 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="ar-component.html">
 <link rel="import" href="ar-component-shared-styles.html">
-<link rel="import" href="augmentedMelbourneLandingPage.html">
-<link rel="import" href="augmentedMelbourneAboutPage.html">
+<link rel="import" href="ar-melbourne-about.html">
+<link rel="import" href="ar-melbourne-landing.html">
 <link rel="import" href="paperToastNotification.html">
-<link rel="import" href="augmentedMelbourneDescriptionPages.html">
-<link rel="import" href="ar-maps-view.html" />
-<link rel="import" href="augmentedMelbourneFooter.html" />
+<link rel="import" href="ar-melbourne-description.html">
+<link rel="import" href="ar-melbourne-map.html" />
+<link rel="import" href="ar-melbourne-footer.html" />
 <script src="../bower_components/pouchdb/dist/pouchdb.min.js"></script>
 <script src="../bower_components/pouchdb-find/dist/pouchdb.find.min.js"></script>
 <script src="../js/worker-pouch.js"></script>
@@ -55,7 +55,7 @@
 
     app-header paper-icon-button {
       --paper-icon-button-ink-color: white;
-    
+
         paper-toast {
           font-size:3em;
         }
@@ -114,14 +114,14 @@
                   <iron-pages selected="{{routeData.view}}" attr-for-selected="name">
                     <ar-component name="active">
                     </ar-component>
-                    <ar-maps-view name="navigation"></ar-maps-view>
-                    <augmented-melbourneLandingPage name="home"></augmented-melbourneLandingPage>
-                    <augmented-melbourneAboutPage name="about"></augmented-melbourneAboutPage>
-                    <augmented-melbourneDescriptionPage name="description"></augmented-melbourneDescriptionPage>
+                    <ar-melbourne-map name="navigation"></ar-melbourne-map>
+                    <ar-melbourne-home name="home"></ar-melbourne-home>
+                    <ar-melbourne-about name="about"></ar-melbourne-about>
+                    <ar-melbourne-description name="description"></ar-melbourne-description>
                   </iron-pages>
                 </div>
                 <footer>
-                  <augmented-melbourne-footer hidden$="[[activeMode]]"></augmented-melbourne-footer>
+                  <ar-melbourne-footer hidden$="[[activeMode]]"></ar-melbourne-footer>
                 </footer>
           <!-- <paper-toast-notif></paper-toast-notif> -->
             </app-header-layout>
