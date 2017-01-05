@@ -87,8 +87,8 @@ function dependencies() {
       minifyCSS: true,
       uglifyJS: true
     })))
-    .pipe(gulpif('**/*.js', babel()))
-    .pipe(gulpif('**/*.js', uglify()))
+    // .pipe(gulpif('**/*.js', babel()))
+    // .pipe(gulpif('**/*.js', uglify()))
     .pipe(project.rejoin());
 }
 
